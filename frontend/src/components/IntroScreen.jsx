@@ -17,8 +17,13 @@ const IntroScreen = ({ onComplete }) => {
   return (
     <div
       className="intro-screen"
+      onClick={() => {
+        setOpacity(0);
+        setTimeout(onComplete, 200);
+      }}
       style={{
         opacity,
+        cursor: 'pointer',
         transition: 'opacity 0.4s ease',
         pointerEvents: opacity < 0.1 ? 'none' : 'all',
         background: '#000000'

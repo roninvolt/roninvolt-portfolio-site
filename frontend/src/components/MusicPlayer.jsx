@@ -43,24 +43,74 @@ const MusicPlayer = ({ isStatic = false }) => {
     if (audioRef.current) audioRef.current.loop = isLooping;
   }, [isLooping]);
 
-  /* time tracking */
+  /* time tracking & play/pause synchronization */
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    const onTime = () => {
+    const onTime  = () => {
       setCurrentTime(audio.currentTime);
       setProgress(audio.duration ? audio.currentTime / audio.duration : 0);
     };
-    const onMeta = () => setDuration(audio.duration);
-    const onEnd  = () => setIsPlaying(false);
+    const onMeta  = () => setDuration(audio.duration);
+    const onEnd   = () => setIsPlaying(false);
+    const onPlay  = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+
     audio.addEventListener('timeupdate', onTime);
     audio.addEventListener('loadedmetadata', onMeta);
     audio.addEventListener('ended', onEnd);
+    audio.addEventListener('play', onPlay);
+    audio.addEventListener('pause', onPause);
+
     return () => {
       audio.removeEventListener('timeupdate', onTime);
       audio.removeEventListener('loadedmetadata', onMeta);
       audio.removeEventListener('ended', onEnd);
+      audio.removeEventListener('play', onPlay);
+      audio.removeEventListener('pause', onPause);
     };
+  }, []);
+
+  /* Autoplay: attempt immediately, and attach interaction listeners if browser requires user gesture */
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    let hasStarted = false;
+
+    const playAudio = () => {
+      if (hasStarted || !audioRef.current) return;
+      audioRef.current
+        .play()
+        .then(() => {
+          hasStarted = true;
+          setIsPlaying(true);
+          removeListeners();
+        })
+        .catch(() => {
+          // Awaiting next user gesture
+        });
+    };
+
+    const removeListeners = () => {
+      window.removeEventListener('click', playAudio);
+      window.removeEventListener('touchstart', playAudio);
+      window.removeEventListener('keydown', playAudio);
+      window.removeEventListener('scroll', playAudio);
+      document.removeEventListener('pointerdown', playAudio);
+    };
+
+    // 1. Direct autoplay attempt on mount
+    playAudio();
+
+    // 2. If blocked by browser autoplay policy, fire as soon as user touches/clicks/scrolls anywhere
+    window.addEventListener('click', playAudio, { once: true });
+    window.addEventListener('touchstart', playAudio, { once: true });
+    window.addEventListener('keydown', playAudio, { once: true });
+    window.addEventListener('scroll', playAudio, { once: true, passive: true });
+    document.addEventListener('pointerdown', playAudio, { once: true });
+
+    return () => removeListeners();
   }, []);
 
   const togglePlay = () => {
@@ -89,8 +139,9 @@ const MusicPlayer = ({ isStatic = false }) => {
       <audio
         ref={audioRef}
         src={encodeURI('/CKay - Love Nwantiti.mp3')}
+        autoPlay
         loop={isLooping}
-        preload="metadata"
+        preload="auto"
       />
 
       {/* ── Corner brackets ─────────────────────── */}
