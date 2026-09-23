@@ -88,7 +88,7 @@ const MusicPlayer = ({ isStatic = false }) => {
     <div className="mp-widget">
       <audio
         ref={audioRef}
-        src="/The Best One Piece Edit Of 2026 🔥 _ Headlights [4K]_ [dwNxgAVOm10].mp3"
+        src={encodeURI('/CKay - Love Nwantiti.mp3')}
         loop={isLooping}
         preload="metadata"
       />
@@ -110,9 +110,9 @@ const MusicPlayer = ({ isStatic = false }) => {
 
         {/* Track info */}
         <div className="mp-info">
-          <div className="mp-title">ONE PIECE</div>
-          <div className="mp-artist">Best Edit — Headlights [4K]</div>
-          <div className="mp-album">WANO · GEAR 5 ARC</div>
+          <div className="mp-title">LOVE NWANTITI</div>
+          <div className="mp-artist">CKay</div>
+          <div className="mp-album">AH BELEKE</div>
         </div>
 
         {/* Waveform + scrubber */}

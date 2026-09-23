@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 /* ============================================================
-   ONE PIECE × RONINVOLT DESIGN SYSTEM
-   Inspired by: Monkey D. Luffy + Haki Glow + Minimalist Dark FiveM
+   RONINVOLT DESIGN SYSTEM
+   Cyberpunk / Dark Minimalist Theme
    ============================================================ */
 
 :root {
@@ -302,7 +302,7 @@ body::after {
   border-left: 1.5px solid var(--cyan);
 }
 
-/* ── ONE PIECE THEME UTILITIES ──────────────────────────── */
+/* ── THEME UTILITIES ───────────────────────────────────── */
 .gta-bg {
   position: fixed;
   inset: 0;
