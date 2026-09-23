@@ -16,6 +16,7 @@ export const personalData = {
   hudStatus: 'ENGINEER // VARUN (RONINVOLT) \u00A0|\u00A0 FOUNDER // VOXEN DEV',
   location: 'Coimbatore, India',
   email: 'roninvolt1@gmail.com',
+  website: 'https://roninvolt.vercel.app',
   zyo: 'https://zyo.lol/roninvolt',
   github: 'https://github.com/roninvolt',
   discord: 'https://discord.gg/uUjqYU4dRp',
@@ -275,6 +276,12 @@ export const contactData = {
   title: 'OPEN COMMS',
   desc: 'Available for AI engineering opportunities, collaborations, and Voxen Development projects. Transmit your packet below or join the Voxen Discord server.',
   links: [
+    {
+      href: 'https://roninvolt.vercel.app',
+      icon: 'fas fa-globe',
+      key: 'WEBSITE',
+      val: 'roninvolt.vercel.app',
+    },
     {
       href: 'https://zyo.lol/roninvolt',
       icon: 'fas fa-link',

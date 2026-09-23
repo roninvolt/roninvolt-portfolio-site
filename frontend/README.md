@@ -1,6 +1,7 @@
-# React + Vite
+# Varun (roninvolt) — Frontend ⚡
+Live Deployment: [https://roninvolt.vercel.app/](https://roninvolt.vercel.app/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Built with React 19, Vite, Three.js, GSAP, and Tailwind CSS.
 
 Currently, two official plugins are available:
 

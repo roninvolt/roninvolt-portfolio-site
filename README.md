@@ -1,6 +1,12 @@
-# Portfolio V 2.0 🚀
+# Varun (roninvolt) — Portfolio V2 ⚡
 
-A modern, high-performance personal portfolio website built with the **MERN stack** (React, Express, Node.js). This version features smooth animations, a responsive design, and an integrated contact system.
+[![Live Portfolio](https://img.shields.io/badge/Live%20Website-roninvolt.vercel.app-00F5FF?style=for-the-badge&logo=vercel&logoColor=white)](https://roninvolt.vercel.app/)
+[![GitHub](https://img.shields.io/badge/GitHub-roninvolt-white?style=for-the-badge&logo=github)](https://github.com/roninvolt/roninvolt)
+[![Discord](https://img.shields.io/badge/Discord-Voxen%20Development-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/uUjqYU4dRp)
+
+🌐 **Live Website**: [https://roninvolt.vercel.app/](https://roninvolt.vercel.app/)
+
+A cyberpunk/GTA VI-inspired personal portfolio for **Varun (roninvolt)** — AI Engineer, 3rd Year B.E. AIML at KGISL Institute of Technology (KiTE) Coimbatore, and Founder of Voxen Development. Built with React 19, Three.js / React Three Fiber, Vite, and Vercel Serverless Functions.
 
 ## 🌟 Features
 
@@ -52,8 +58,8 @@ Portfolio-V-2.0/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/roninvolt/Portfolio-V-2.0.git
-cd Portfolio-V-2.0
+git clone https://github.com/roninvolt/roninvolt.git
+cd roninvolt
 ```
 
 ### 2. Setup Backend
@@ -76,6 +82,7 @@ npm run dev
 ```
 
 ## 📧 Contact & Links
+- **Live Portfolio**: [roninvolt.vercel.app](https://roninvolt.vercel.app/)
 - **Email**: [roninvolt1@gmail.com](mailto:roninvolt1@gmail.com)
 - **Zyo Bio**: [zyo.lol/roninvolt](https://zyo.lol/roninvolt)
 - **Discord Server**: [Voxen Development](https://discord.gg/uUjqYU4dRp)
