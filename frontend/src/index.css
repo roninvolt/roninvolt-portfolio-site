@@ -451,15 +451,16 @@ body::after {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 92%;
-  max-width: 1100px;
+  width: 94%;
+  max-width: 1240px;
   z-index: 1000;
-  padding: 0.6rem 2.5rem;
+  padding: 0.55rem 1.8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  background: rgba(10, 10, 12, 0.5);
+  background: rgba(10, 10, 12, 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -467,33 +468,66 @@ body::after {
 }
 
 .navbar.scrolled {
-  background: rgba(10, 10, 12, 0.9);
+  background: rgba(10, 10, 12, 0.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.03);
-  padding: 0.5rem 2rem;
-  width: 92%;
-  max-width: 1100px;
-  top: 15px;
+  padding: 0.5rem 1.6rem;
+  width: 94%;
+  max-width: 1240px;
+  top: 14px;
 }
 
 .nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-hud);
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: var(--cyan);
-  letter-spacing: 3px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.nav-logo-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.nav-logo-brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.nav-logo-name {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--cyan);
+  letter-spacing: 2px;
+}
+
+.nav-logo-alias {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.2rem;
+  flex-shrink: 0;
 }
 
 .nav-link {
@@ -609,7 +643,20 @@ body::after {
   display: flex;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1220px) {
+  .nav-links {
+    gap: 0.9rem;
+  }
+  .nav-link {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+  }
+  .nav-logo-alias {
+    display: none;
+  }
+}
+
+@media (max-width: 1040px) {
   .nav-links {
     display: none;
   }

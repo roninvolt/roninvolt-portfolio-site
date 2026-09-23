@@ -38,10 +38,12 @@ const Navbar = () => {
   return (
     <>
       <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
-        <button className="nav-logo" onClick={() => go('#home')} style={{ fontSize: '1.25rem', fontWeight: 900, display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--cyan)' }}>
-          <img src="/voxen_logo.jpg" alt="Voxen" style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover', border: '1px solid rgba(255, 255, 255, 0.3)' }} />
-          <span>{personalData.name}</span>
-          <span style={{ fontSize: '0.72rem', color: 'rgba(255, 255, 255, 0.45)', fontFamily: 'var(--font-mono)', letterSpacing: '1px' }}>/ {personalData.alias}</span>
+        <button className="nav-logo" onClick={() => go('#home')}>
+          <img src="/voxen_logo.jpg" alt="Voxen" className="nav-logo-img" />
+          <span className="nav-logo-brand">
+            <span className="nav-logo-name">{personalData.name}</span>
+            <span className="nav-logo-alias">/ {personalData.alias}</span>
+          </span>
         </button>
 
         <ul className="nav-links">
