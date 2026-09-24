@@ -3,11 +3,16 @@ import React, { useEffect, useRef, useState } from 'react';
 const CustomCursor = () => {
   const outerRef = useRef(null);
   const [hovered, setHovered] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
   const pos = useRef({ x: -100, y: -100 });
   const smooth = useRef({ x: -100, y: -100 });
   const raf = useRef(null);
 
   useEffect(() => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth <= 768;
+    setIsTouch(isTouchDevice);
+    if (isTouchDevice) return;
+
     const move = (e) => {
       pos.current = { x: e.clientX, y: e.clientY };
     };
@@ -43,6 +48,8 @@ const CustomCursor = () => {
       });
     };
   }, []);
+
+  if (isTouch) return null;
 
   return (
     <div

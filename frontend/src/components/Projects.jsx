@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionBg from './SectionBg';
+import MatrixText from './MatrixText';
 import { projectsData } from '../data/portfolioData';
 
 const Projects = () => {
@@ -10,9 +11,15 @@ const Projects = () => {
       <SectionBg variant="projects" />
       <div className="section">
         <div className="reveal">
-          <div className="section-tag" style={{ color: 'var(--cyan)' }}>{sectionTag}</div>
-          <h2 className="section-title">RECENT <span>WORK</span></h2>
-          <div className="section-id" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>{sectionId}</div>
+          <div className="section-tag">
+            <MatrixText text={sectionTag} glitchColor="#00ff66" />
+          </div>
+          <h2 className="section-title">
+            RECENT <span><MatrixText text="WORK" glitchColor="#00f0ff" /></span>
+          </h2>
+          <div className="section-id">
+            <MatrixText text={sectionId} glitchColor="#00f0ff" />
+          </div>
         </div>
 
         {/* Featured Project */}
@@ -53,7 +60,7 @@ const Projects = () => {
             </div>
             
             <h3 style={{ fontFamily: 'var(--font-hud)', fontSize: '1.8rem', fontWeight: 900, color: '#fff', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
-              {featured.title}
+              <MatrixText text={featured.title} glitchColor="#00f0ff" />
             </h3>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.4)', marginBottom: '1.2rem', letterSpacing: '1px' }}>
               {featured.subtitle}
@@ -168,7 +175,7 @@ const Projects = () => {
                   marginBottom: '0.4rem'
                 }}
               >
-                {p.title}
+                <MatrixText text={p.title} glitchColor="#00f0ff" triggerOnHover={true} />
               </div>
 
               <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-body)', lineHeight: '1.5', marginBottom: '1.2rem' }}>
@@ -277,7 +284,7 @@ const Projects = () => {
                   marginBottom: '0.4rem'
                 }}
               >
-                {p.title}
+                <MatrixText text={p.title} glitchColor="#00f0ff" triggerOnHover={true} />
               </div>
 
               <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-body)', lineHeight: '1.5', marginBottom: '1.2rem' }}>

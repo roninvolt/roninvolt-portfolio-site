@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionBg from './SectionBg';
+import MatrixText from './MatrixText';
 import { personalData, aboutData } from '../data/portfolioData';
 
 const About = () => (
@@ -7,32 +8,40 @@ const About = () => (
     <SectionBg variant="about" />
     <div className="section">
       <div className="reveal">
-        <div className="section-tag" style={{ color: 'var(--cyan)' }}>{aboutData.sectionTag}</div>
-        <h2 className="section-title">ABOUT <span>ME</span></h2>
-        <div className="section-id" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>{aboutData.sectionId}</div>
+        <div className="section-tag">
+          <MatrixText text={aboutData.sectionTag} glitchColor="#00ff66" />
+        </div>
+        <h2 className="section-title">
+          ABOUT <span><MatrixText text="ME" glitchColor="#00f0ff" /></span>
+        </h2>
+        <div className="section-id">
+          <MatrixText text={aboutData.sectionId} glitchColor="#00f0ff" />
+        </div>
       </div>
 
       <div className="about-grid">
         <div className="reveal d1">
           <div className="about-bio" style={{ color: 'rgba(255, 255, 255, 0.75)', fontFamily: 'var(--font-body)' }}>
             <p>
-              I'm <span className="bio-hl" style={{ color: 'var(--cyan)' }}>{personalData.fullName}</span> — an <span className="bio-hl" style={{ color: 'var(--cyan)' }}>AI Engineer</span> and the Founder of <span className="bio-hl" style={{ color: 'var(--cyan)' }}>Voxen Development</span>, operating out of Coimbatore, India.
+              I'm <span className="bio-hl">{personalData.fullName}</span> — an <span className="bio-hl">AI Engineer</span> and the Founder of <span className="bio-hl">Voxen Development</span>, operating out of Coimbatore, India.
             </p>
             <p>
-              Currently in my <span className="bio-hl" style={{ color: 'var(--cyan)' }}>3rd year B.E. AIML</span> (Artificial Intelligence &amp; Machine Learning) at <span className="bio-hl" style={{ color: 'var(--cyan)' }}>KGISL Institute of Technology (KiTE)</span>, Coimbatore. I lead Voxen Development, architecting next-generation Discord assistants like Xalven and intelligent automation tools.
+              Currently in my <span className="bio-hl">3rd year B.E. AIML</span> (Artificial Intelligence &amp; Machine Learning) at <span className="bio-hl">KGISL Institute of Technology (KiTE)</span>, Coimbatore. I lead Voxen Development, architecting next-generation Discord assistants like Xalven and intelligent automation tools.
             </p>
             <p>
-              My core technical stack centers around <span className="bio-hl" style={{ color: 'var(--cyan)' }}>Python, PyTorch, Deep Learning</span>, LLM pipelines, FastAPI, and TypeScript for robust end-to-end intelligence systems.
+              My core technical stack centers around <span className="bio-hl">Python, PyTorch, Deep Learning</span>, LLM pipelines, FastAPI, and TypeScript for robust end-to-end intelligence systems.
             </p>
           </div>
         </div>
 
         <div className="reveal d2">
           <div className="stats-grid">
-            {aboutData.stats.map(({ num, lbl }) => (
-              <div key={lbl} className="stat-block" style={{ background: 'rgba(10, 10, 12, 0.9)', borderColor: 'rgba(255, 255, 255, 0.08)' }}>
-                <span className="stat-num" style={{ color: 'var(--cyan)', textShadow: 'var(--glow-cyan)' }}>{num}</span>
-                <span className="stat-lbl" style={{ fontSize: '0.62rem', letterSpacing: '1px' }}>{lbl}</span>
+            {aboutData.stats.map(({ num, lbl }, idx) => (
+              <div key={lbl} className="stat-block">
+                <span className="stat-num">
+                  <MatrixText text={num} glitchColor="#00ff66" autoGlitch={true} glitchInterval={6500 + idx * 1500} />
+                </span>
+                <span className="stat-lbl">{lbl}</span>
               </div>
             ))}
           </div>

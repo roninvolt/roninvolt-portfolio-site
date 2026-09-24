@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, Suspense } from 'react';
 import HeroSphere from './HeroSphere';
 import SectionBg from './SectionBg';
+import HeroName from './HeroName';
+import MatrixText from './MatrixText';
 import { personalData, heroData } from '../data/portfolioData';
 
 const Hero = () => {
@@ -25,43 +27,33 @@ const Hero = () => {
         <div style={{ position: 'relative', zIndex: 1 }}>
           {/* Status */}
           <div className="hero-status reveal visible" style={{ borderColor: 'rgba(255, 255, 255, 0.15)', background: 'rgba(255, 255, 255, 0.03)', color: 'var(--cyan)' }}>
-            {personalData.status}
+            <MatrixText text={personalData.status} glitchColor="#00ff66" autoGlitch={true} glitchInterval={10000} />
           </div>
 
-          {/* Name - Unbounded Minimalist Typography */}
-          <h1 className="hero-name reveal visible" style={{ marginBottom: '1.2rem', fontFamily: 'var(--font-hud)', textTransform: 'uppercase' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.75rem' }}>
-              <span className="gta-text-gradient" style={{ fontSize: 'clamp(2.5rem, 7.5vw, 6.2rem)', fontWeight: 900, letterSpacing: '-2px', textShadow: '0 0 30px rgba(255, 255, 255, 0.2)', lineHeight: 0.95, background: 'linear-gradient(135deg, #ffffff 0%, #888888 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                {personalData.name}
-              </span>
-              <span style={{ fontSize: 'clamp(1.2rem, 3.2vw, 2.6rem)', color: 'rgba(255, 255, 255, 0.45)', fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '1px' }}>
-                / {personalData.alias}
-              </span>
-            </div>
-            <span style={{ fontSize: 'clamp(0.85rem, 2vw, 1.15rem)', color: 'var(--cyan)', letterSpacing: '3px', display: 'flex', alignItems: 'center', gap: '8px', opacity: 0.9, marginTop: '0.6rem', fontFamily: 'var(--font-mono)' }}>
-              <i className="fas fa-terminal" style={{ fontSize: '0.8rem' }} /> ONLINE ALIAS: @{personalData.alias}
-            </span>
-          </h1>
+          {/* Name - Ultra Aesthetic Holographic & Decoder System */}
+          <HeroName />
 
           {/* HUD data line */}
           <div className="hero-data reveal visible d1" style={{ color: 'rgba(255, 255, 255, 0.4)', fontFamily: 'var(--font-mono)' }}>
-            {personalData.hudStatus}
+            <MatrixText text={personalData.hudStatus} glitchColor="#00f0ff" triggerOnHover={true} />
           </div>
 
           {/* Roles */}
           <div className="hero-role-wrap reveal visible d2" style={{ borderLeftColor: 'var(--cyan)' }}>
-            <div className="hero-role-label" style={{ color: 'var(--gold)' }}>{heroData.objective}</div>
+            <div className="hero-role-label" style={{ color: 'var(--gold)' }}>
+              <MatrixText text={heroData.objective} glitchColor="#ffd700" />
+            </div>
             <div className="hero-roles-container">
               <div style={{ animation: 'roleScroll 12s ease-in-out infinite' }}>
                 {[...heroData.roles, heroData.roles[0]].map((r, i) => (
-                  <div key={i} className="hero-role" style={{ color: '#fff', fontFamily: 'var(--font-hud)', fontSize: 'clamp(0.9rem, 2vw, 1.3rem)' }}>{r}</div>
+                  <div key={i} className="hero-role">{r}</div>
                 ))}
               </div>
             </div>
           </div>
 
-          <p className="hero-desc reveal visible d3" style={{ color: 'rgba(255, 255, 255, 0.65)' }}>
-            {heroData.description}
+          <p className="hero-desc reveal visible d3" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+            Engineering intelligent <span className="bio-hl">AI models</span>, <span className="bio-hl">autonomous agents</span>, and deep learning pipelines. 3rd year B.E. AIML student at <span className="bio-hl">KGISL Institute of Technology (KiTE)</span>, Coimbatore, and Founder of <span className="bio-hl">Voxen Development</span>.
           </p>
 
           {/* Buttons */}

@@ -1,5 +1,6 @@
 import React from 'react';
 import SectionBg from './SectionBg';
+import MatrixText from './MatrixText';
 import { skillsData } from '../data/portfolioData';
 
 const Skills = () => (
@@ -7,9 +8,15 @@ const Skills = () => (
     <SectionBg variant="skills" />
     <div className="section">
       <div className="reveal">
-        <div className="section-tag" style={{ color: 'var(--cyan)' }}>04 // CORE ENGINE</div>
-        <h2 className="section-title">MY <span>SKILLS</span></h2>
-        <div className="section-id" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>SKILLS_LOADED — {skillsData.length} MODULES ACTIVE</div>
+        <div className="section-tag">
+          <MatrixText text="04 // CORE ENGINE" glitchColor="#00ff66" />
+        </div>
+        <h2 className="section-title">
+          MY <span><MatrixText text="SKILLS" glitchColor="#00f0ff" /></span>
+        </h2>
+        <div className="section-id">
+          <MatrixText text={`SKILLS_LOADED — ${skillsData.length} MODULES ACTIVE`} glitchColor="#00f0ff" />
+        </div>
       </div>
       <div className="skills-grid">
         {skillsData.map((m, i) => (
@@ -41,7 +48,9 @@ const Skills = () => (
             </div>
 
             <div className="skill-mod-hdr">
-              <h3 style={{ fontSize: '0.9rem', fontFamily: 'var(--font-hud)' }}>{m.label}</h3>
+              <h3 style={{ fontSize: '0.9rem', fontFamily: 'var(--font-hud)' }}>
+                <MatrixText text={m.label} glitchColor="#00f0ff" triggerOnHover={true} />
+              </h3>
             </div>
             <p className="skill-mod-desc" style={{ color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>{m.desc}</p>
             <div className="skill-sep" style={{ backgroundColor: 'rgba(255, 255, 255, 0.06)' }} />

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import MatrixText from './MatrixText';
 import { personalData } from '../data/portfolioData';
 
 const NAV_ITEMS = [
@@ -25,8 +26,15 @@ const Navbar = () => {
         if (el && window.scrollY >= el.offsetTop - 140) { setActive(ids[i]); break; }
       }
     };
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('keydown', onKeyDown);
+    };
   }, []);
 
   const go = (href) => {
@@ -41,8 +49,12 @@ const Navbar = () => {
         <button className="nav-logo" onClick={() => go('#home')}>
           <img src="/voxen_logo.jpg" alt="Voxen" className="nav-logo-img" />
           <span className="nav-logo-brand">
-            <span className="nav-logo-name">{personalData.name}</span>
-            <span className="nav-logo-alias">/ {personalData.alias}</span>
+            <span className="nav-logo-name">
+              <MatrixText text={personalData.name} glitchColor="var(--cyan)" />
+            </span>
+            <span className="nav-logo-alias">
+              / <MatrixText text={personalData.alias} glitchColor="#00ff66" />
+            </span>
           </span>
         </button>
 
@@ -63,7 +75,7 @@ const Navbar = () => {
           <a href={personalData.resumePath} download={personalData.resumeFileName} className="nav-resume-btn">
             Download CV
           </a>
-          <button className="hamburger" onClick={() => setMobileOpen(o => !o)} aria-label="Toggle menu">
+          <button className="hamburger" onClick={() => setMobileOpen(o => !o)} aria-label="Toggle menu" aria-expanded={mobileOpen}>
             <span style={{ transform: mobileOpen ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
             <span style={{ opacity: mobileOpen ? 0 : 1 }} />
             <span style={{ transform: mobileOpen ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
@@ -71,13 +83,41 @@ const Navbar = () => {
         </div>
       </nav>
 
+      {mobileOpen && (
+        <div
+          className="mobile-backdrop"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
       <div className={`mobile-menu${mobileOpen ? ' open' : ''}`}>
         {NAV_ITEMS.map(item => (
-          <button key={item.label} className={`nav-link${active === item.href.replace('#','') ? ' active' : ''}`} onClick={() => go(item.href)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left', fontSize: '1rem' }}>
+          <button
+            key={item.label}
+            className={`nav-link${active === item.href.replace('#','') ? ' active' : ''}`}
+            onClick={() => go(item.href)}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              textAlign: 'left',
+              fontSize: '1.05rem',
+              padding: '8px 4px',
+            }}
+          >
             {item.label}
           </button>
         ))}
-        <a href={personalData.resumePath} download={personalData.resumeFileName} className="nav-resume-btn" style={{ alignSelf: 'flex-start' }}>Download CV</a>
+        <a
+          href={personalData.resumePath}
+          download={personalData.resumeFileName}
+          className="nav-resume-btn"
+          style={{ alignSelf: 'flex-start', marginTop: '0.5rem' }}
+        >
+          Download CV
+        </a>
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SectionBg from './SectionBg';
+import MatrixText from './MatrixText';
 import { contactData } from '../data/portfolioData';
 
 const Contact = () => {
@@ -34,16 +35,24 @@ const Contact = () => {
       <SectionBg variant="contact" />
       <div className="section">
         <div className="reveal">
-          <div className="section-tag" style={{ color: 'var(--cyan)' }}>{contactData.sectionTag}</div>
-          <h2 className="section-title">GET IN <span>TOUCH</span></h2>
-          <div className="section-id" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>{contactData.sectionId}</div>
+          <div className="section-tag">
+            <MatrixText text={contactData.sectionTag} glitchColor="#00ff66" />
+          </div>
+          <h2 className="section-title">
+            GET IN <span><MatrixText text="TOUCH" glitchColor="#00f0ff" /></span>
+          </h2>
+          <div className="section-id">
+            <MatrixText text={contactData.sectionId} glitchColor="#00f0ff" />
+          </div>
         </div>
 
         <div className="terminal-wrap reveal d1" style={{ background: 'rgba(10, 10, 12, 0.92)', borderColor: 'rgba(255, 255, 255, 0.08)', boxShadow: '0 0 60px rgba(255, 255, 255, 0.02)' }}>
           {/* Terminal Header */}
           <div className="terminal-chrome" style={{ background: 'rgba(5, 5, 8, 0.9)', borderBottomColor: 'rgba(255, 255, 255, 0.08)' }}>
             <div className="tc-dot r" /><div className="tc-dot y" /><div className="tc-dot g" />
-            <span className="tc-title" style={{ color: 'rgba(255, 255, 255, 0.35)', fontFamily: 'var(--font-mono)' }}>{contactData.terminalPrompt}</span>
+            <span className="tc-title" style={{ color: 'rgba(255, 255, 255, 0.35)', fontFamily: 'var(--font-mono)' }}>
+              <MatrixText text={contactData.terminalPrompt} glitchColor="#00ff66" />
+            </span>
           </div>
 
           <div className="terminal-body">

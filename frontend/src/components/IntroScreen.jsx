@@ -63,20 +63,37 @@ const IntroScreen = ({ onComplete }) => {
         </div>
       ) : (
         <div style={{ textAlign: 'center', zIndex: 3, position: 'relative' }}>
+          {/* Subtle intro name aura */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: '120%',
+              height: '140%',
+              background: 'radial-gradient(ellipse, rgba(0, 245, 255, 0.22) 0%, rgba(168, 85, 247, 0.12) 40%, transparent 70%)',
+              filter: 'blur(35px)',
+              pointerEvents: 'none',
+              zIndex: -1,
+            }}
+          />
           <div
             style={{
               fontFamily: 'var(--font-hud)',
               fontSize: 'clamp(2.5rem, 6.5vw, 4.5rem)',
               fontWeight: 900,
-              color: '#ffffff',
               letterSpacing: '4px',
               textTransform: 'uppercase',
-              textShadow: '0 0 20px rgba(255,255,255,0.3)',
               animation: 'nameReveal 0.4s ease forwards',
               lineHeight: 1.1,
+              filter: 'drop-shadow(0 0 25px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 45px rgba(0, 245, 255, 0.3))',
             }}
           >
-            {personalData.name} <span style={{ fontSize: '0.55em', color: 'var(--cyan)' }}>[{personalData.alias.toUpperCase()}]</span>
+            <span className="name-text-holo">{personalData.name}</span>{' '}
+            <span style={{ fontSize: '0.55em', color: 'var(--cyan)', fontFamily: 'var(--font-mono)', verticalAlign: 'middle' }}>
+              [{personalData.alias.toUpperCase()}]
+            </span>
           </div>
           <div
             style={{

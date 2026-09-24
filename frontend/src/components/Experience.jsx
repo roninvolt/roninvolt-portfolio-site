@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SectionBg from './SectionBg';
+import MatrixText from './MatrixText';
 import { experienceData } from '../data/portfolioData';
 
 const Experience = () => {
@@ -11,9 +12,15 @@ const Experience = () => {
       <SectionBg variant="experience" />
       <div className="section">
         <div className="reveal">
-          <div className="section-tag" style={{ color: 'var(--cyan)' }}>03 // EXPERIENCE</div>
-          <h2 className="section-title">EXPERI<span>ENCE</span></h2>
-          <div className="section-id" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>EXPERIENCE_LOG::COMPILE_SUCCESSFUL</div>
+          <div className="section-tag">
+            <MatrixText text="03 // EXPERIENCE" glitchColor="#00ff66" />
+          </div>
+          <h2 className="section-title">
+            EXPERI<span><MatrixText text="ENCE" glitchColor="#00f0ff" /></span>
+          </h2>
+          <div className="section-id">
+            <MatrixText text="EXPERIENCE_LOG::COMPILE_SUCCESSFUL" glitchColor="#00f0ff" />
+          </div>
         </div>
 
         <div className="reveal d1">
@@ -61,7 +68,9 @@ const Experience = () => {
                 <img src={exp.logo} alt={exp.company} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div style={{ flex: 1 }}>
-                <div className="exp-company" style={{ fontFamily: 'var(--font-hud)', fontSize: '1.1rem' }}>{exp.company}</div>
+                <div className="exp-company" style={{ fontFamily: 'var(--font-hud)', fontSize: '1.1rem' }}>
+                  <MatrixText text={exp.company} glitchColor="#00f0ff" />
+                </div>
                 <div className="exp-loc"><i className="fas fa-map-marker-alt" style={{ marginRight: 5, color: 'var(--cyan)' }} />{exp.loc}</div>
               </div>
               <div className="exp-pills">
@@ -71,7 +80,9 @@ const Experience = () => {
             </div>
 
             <div className="exp-separator" style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }} />
-            <div className="exp-role" style={{ fontFamily: 'var(--font-hud)', fontSize: '1.3rem' }}>{exp.role}</div>
+            <div className="exp-role" style={{ fontFamily: 'var(--font-hud)', fontSize: '1.3rem' }}>
+              <MatrixText text={exp.role} glitchColor="#00ff66" />
+            </div>
             <div className="exp-period" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)' }}>WORK PERIOD — {exp.period}</div>
 
             <div className="exp-skills">

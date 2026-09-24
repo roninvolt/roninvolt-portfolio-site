@@ -1,19 +1,18 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
+import MatrixText from './MatrixText';
 
 /* ── Waveform bar data ─────────────────────────────────────
-   80 bars with pseudo-random heights seeded by position.
-   Using a deterministic pattern so SSR/hydration matches. */
-const BAR_COUNT = 48; /* 48 bars is visually identical but 40% less DOM */
+   48 bars with pseudo-random heights seeded by position. */
+const BAR_COUNT = 48;
 const BARS = Array.from({ length: BAR_COUNT }, (_, i) => {
   const t = i / BAR_COUNT;
-  // Multiple sine waves overlaid to look like a real waveform
   const h =
-    40 +
+    38 +
     28 * Math.sin(t * Math.PI * 6.3) +
-    18 * Math.sin(t * Math.PI * 13.7 + 1.2) +
-    10 * Math.sin(t * Math.PI * 23.1 + 0.7) +
-    7  * Math.sin(t * Math.PI * 41.5 + 2.1);
-  return Math.max(8, Math.min(96, h));
+    20 * Math.sin(t * Math.PI * 13.7 + 1.2) +
+    12 * Math.sin(t * Math.PI * 23.1 + 0.7) +
+    8 * Math.sin(t * Math.PI * 41.5 + 2.1);
+  return Math.max(14, Math.min(96, Math.round(h)));
 });
 
 const fmt = (s) => {
@@ -24,14 +23,16 @@ const fmt = (s) => {
 };
 
 const MusicPlayer = ({ isStatic = false }) => {
-  const audioRef  = useRef(null);
-  const waveRef   = useRef(null);
-  const [isPlaying,   setIsPlaying]   = useState(false);
-  const [volume,      setVolume]      = useState(0.4);
-  const [progress,    setProgress]    = useState(0);   // 0–1
+  const audioRef = useRef(null);
+  const waveRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.4);
+  const [prevVolume, setPrevVolume] = useState(0.4);
+  const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration,    setDuration]    = useState(0);
-  const [isLooping,   setIsLooping]   = useState(true);
+  const [duration, setDuration] = useState(0);
+  const [isLooping, setIsLooping] = useState(true);
+  const [hoverSeek, setHoverSeek] = useState(null);
 
   /* sync volume */
   useEffect(() => {
@@ -43,17 +44,17 @@ const MusicPlayer = ({ isStatic = false }) => {
     if (audioRef.current) audioRef.current.loop = isLooping;
   }, [isLooping]);
 
-  /* time tracking & play/pause synchronization */
+  /* time tracking & sync */
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    const onTime  = () => {
+    const onTime = () => {
       setCurrentTime(audio.currentTime);
       setProgress(audio.duration ? audio.currentTime / audio.duration : 0);
     };
-    const onMeta  = () => setDuration(audio.duration);
-    const onEnd   = () => setIsPlaying(false);
-    const onPlay  = () => setIsPlaying(true);
+    const onMeta = () => setDuration(audio.duration);
+    const onEnd = () => setIsPlaying(false);
+    const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
 
     audio.addEventListener('timeupdate', onTime);
@@ -71,11 +72,10 @@ const MusicPlayer = ({ isStatic = false }) => {
     };
   }, []);
 
-  /* Autoplay: attempt immediately, and attach interaction listeners if browser requires user gesture */
+  /* Autoplay handling with fallback */
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-
     let hasStarted = false;
 
     const playAudio = () => {
@@ -87,9 +87,7 @@ const MusicPlayer = ({ isStatic = false }) => {
           setIsPlaying(true);
           removeListeners();
         })
-        .catch(() => {
-          // Awaiting next user gesture
-        });
+        .catch(() => {});
     };
 
     const removeListeners = () => {
@@ -100,10 +98,8 @@ const MusicPlayer = ({ isStatic = false }) => {
       document.removeEventListener('pointerdown', playAudio);
     };
 
-    // 1. Direct autoplay attempt on mount
     playAudio();
 
-    // 2. If blocked by browser autoplay policy, fire as soon as user touches/clicks/scrolls anywhere
     window.addEventListener('click', playAudio, { once: true });
     window.addEventListener('touchstart', playAudio, { once: true });
     window.addEventListener('keydown', playAudio, { once: true });
@@ -120,10 +116,38 @@ const MusicPlayer = ({ isStatic = false }) => {
       audio.pause();
       setIsPlaying(false);
     } else {
-      audio.play()
-        .then(() => setIsPlaying(true))
-        .catch(() => {});
+      audio.play().then(() => setIsPlaying(true)).catch(() => {});
     }
+  };
+
+  const skipTime = (amount) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + amount));
+  };
+
+  const toggleMute = () => {
+    if (volume > 0) {
+      setPrevVolume(volume);
+      setVolume(0);
+    } else {
+      setVolume(prevVolume || 0.4);
+    }
+  };
+
+  const handleWaveMouseMove = (e) => {
+    if (!waveRef.current || !duration) return;
+    const rect = waveRef.current.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    setHoverSeek({
+      ratio,
+      time: ratio * duration,
+      x: e.clientX - rect.left,
+    });
+  };
+
+  const handleWaveMouseLeave = () => {
+    setHoverSeek(null);
   };
 
   const seek = useCallback((e) => {
@@ -135,7 +159,7 @@ const MusicPlayer = ({ isStatic = false }) => {
   }, []);
 
   return (
-    <div className="mp-widget">
+    <div className={`mp-widget ${isPlaying ? 'is-playing' : ''}`}>
       <audio
         ref={audioRef}
         src={encodeURI('/CKay - Love Nwantiti.mp3')}
@@ -144,95 +168,197 @@ const MusicPlayer = ({ isStatic = false }) => {
         preload="auto"
       />
 
-      {/* ── Corner brackets ─────────────────────── */}
+      {/* Reactive Ambient Glow Aura */}
+      <div className={`mp-ambient-aura ${isPlaying ? 'active' : ''}`} aria-hidden="true" />
+
+      {/* Corner Brackets */}
       <span className="mp-corner mp-tl" aria-hidden="true" />
       <span className="mp-corner mp-tr" aria-hidden="true" />
       <span className="mp-corner mp-bl" aria-hidden="true" />
       <span className="mp-corner mp-br" aria-hidden="true" />
 
-      {/* ── Status label ────────────────────────── */}
+      {/* Status Bar */}
       <div className="mp-status">
-        <span className={`mp-dot${isPlaying ? ' mp-dot--on' : ''}`} />
-        {isPlaying ? 'PLAYING' : 'PAUSED'}
-      </div>
-
-      {/* ── Main layout: info | waveform | controls ─ */}
-      <div className="mp-body">
-
-        {/* Track info */}
-        <div className="mp-info">
-          <div className="mp-title">LOVE NWANTITI</div>
-          <div className="mp-artist">CKay</div>
-          <div className="mp-album">AH BELEKE</div>
+        <div className="mp-status-left">
+          <span className={`mp-dot ${isPlaying ? 'mp-dot--on' : ''}`} />
+          <span className="mp-status-text">{isPlaying ? 'STREAMING AUDIO' : 'AUDIO PAUSED'}</span>
+          <span className="mp-status-divider">|</span>
+          <span className="mp-status-specs">
+            <MatrixText text="HI-RES // 320 KBPS" glitchColor="#00ff66" />
+          </span>
         </div>
 
-        {/* Waveform + scrubber */}
+        {/* Live Audio Visualizer Bars in Header */}
+        <div className={`mp-live-indicator ${isPlaying ? 'active' : ''}`} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+
+      {/* Main Body */}
+      <div className="mp-body">
+        {/* Left: Vinyl Disc & Track Info */}
+        <div className="mp-track-wrap">
+          <div className="mp-disc-container" onClick={togglePlay} title={isPlaying ? 'Pause' : 'Play'}>
+            <div className={`mp-vinyl-disc ${isPlaying ? 'spinning' : ''}`}>
+              <div className="mp-vinyl-grooves" />
+              <div className="mp-vinyl-center">
+                <img src="/voxen_logo.jpg" alt="Voxen Audio" className="mp-vinyl-artwork" />
+                <div className="mp-vinyl-spindle" />
+              </div>
+            </div>
+            {/* Sound Wave Ripple when playing */}
+            {isPlaying && <div className="mp-disc-ripple" />}
+          </div>
+
+          <div className="mp-info">
+            <div className="mp-title">
+              <MatrixText text="LOVE NWANTITI" glitchColor="#00f0ff" triggerOnHover={true} />
+            </div>
+            <div className="mp-artist">
+              <i className="fas fa-music" style={{ fontSize: '0.65rem', marginRight: '6px', color: '#00f0ff' }} />
+              CKay
+            </div>
+            <div className="mp-badge-row">
+              <span className="mp-badge">ORIGINAL SOUNDTRACK</span>
+              <span className="mp-badge-format">MP3 44.1kHz</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Center: Waveform & Scrubber */}
         <div className="mp-wave-col">
           <div
             className="mp-waveform"
             ref={waveRef}
             onClick={seek}
+            onMouseMove={handleWaveMouseMove}
+            onMouseLeave={handleWaveMouseLeave}
             role="slider"
-            aria-label="Seek"
+            aria-label="Seek track"
             aria-valuenow={Math.round(progress * 100)}
           >
+            {/* Hover timestamp tooltip */}
+            {hoverSeek && (
+              <div
+                className="mp-seek-tooltip"
+                style={{ left: `${hoverSeek.x}px` }}
+              >
+                {fmt(hoverSeek.time)}
+              </div>
+            )}
+
+            {/* Hover position line */}
+            {hoverSeek && (
+              <div
+                className="mp-seek-line"
+                style={{ left: `${hoverSeek.x}px` }}
+              />
+            )}
+
+            {/* Visualizer bars */}
             {BARS.map((h, i) => {
               const played = i / BAR_COUNT <= progress;
               return (
                 <div
                   key={i}
-                  className={`mp-bar${played ? ' mp-bar--played' : ''}${isPlaying ? ' mp-bar--anim' : ''}`}
+                  className={`mp-bar ${played ? 'mp-bar--played' : ''} ${isPlaying ? 'mp-bar--anim' : ''}`}
                   style={{
                     height: `${h}%`,
-                    animationDelay: `${((i * 137) % 800) / 1000}s`,
+                    animationDelay: `${((i * 73) % 900) / 1000}s`,
                   }}
                 />
               );
             })}
-            {/* Scrubber dot */}
+
+            {/* Scrubber pointer */}
             <div
               className="mp-scrubber"
-              style={{ left: `calc(${progress * 100}% - 5px)` }}
+              style={{ left: `calc(${progress * 100}% - 6px)` }}
             />
           </div>
+
           <div className="mp-times">
             <span>{fmt(currentTime)}</span>
+            <span className="mp-time-progress">
+              {Math.round(progress * 100)}%
+            </span>
             <span>{fmt(duration)}</span>
           </div>
         </div>
 
-        {/* Controls */}
+        {/* Right: Controls & Volume */}
         <div className="mp-controls">
-          <button
-            className={`mp-loop-btn${isLooping ? ' mp-loop-btn--on' : ''}`}
-            onClick={() => setIsLooping(l => !l)}
-            aria-label="Toggle loop"
-            title="Loop"
-          >
-            <i className="fas fa-redo" />
-          </button>
+          <div className="mp-btn-cluster">
+            {/* Rewind 10s */}
+            <button
+              className="mp-ctrl-btn"
+              onClick={() => skipTime(-10)}
+              title="Rewind 10 seconds"
+              aria-label="Rewind 10s"
+            >
+              <i className="fas fa-backward" />
+            </button>
 
-          <button
-            className="mp-play-btn"
-            onClick={togglePlay}
-            aria-label={isPlaying ? 'Pause' : 'Play'}
-          >
-            <i className={`fas fa-${isPlaying ? 'pause' : 'play'}`} />
-          </button>
+            {/* Big Play/Pause Button */}
+            <button
+              className={`mp-play-btn ${isPlaying ? 'playing' : ''}`}
+              onClick={togglePlay}
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+              title={isPlaying ? 'Pause' : 'Play'}
+            >
+              <i className={`fas fa-${isPlaying ? 'pause' : 'play'}`} />
+            </button>
 
+            {/* Forward 10s */}
+            <button
+              className="mp-ctrl-btn"
+              onClick={() => skipTime(10)}
+              title="Fast Forward 10 seconds"
+              aria-label="Forward 10s"
+            >
+              <i className="fas fa-forward" />
+            </button>
+
+            {/* Loop Toggle */}
+            <button
+              className={`mp-ctrl-btn mp-loop-btn ${isLooping ? 'mp-loop-btn--on' : ''}`}
+              onClick={() => setIsLooping((l) => !l)}
+              aria-label="Toggle loop"
+              title={isLooping ? 'Loop Enabled' : 'Loop Disabled'}
+            >
+              <i className="fas fa-redo" />
+            </button>
+          </div>
+
+          {/* Volume Control */}
           <div className="mp-volume">
-            <i className="fas fa-volume-up mp-vol-icon" />
+            <button
+              className="mp-vol-toggle"
+              onClick={toggleMute}
+              title={volume === 0 ? 'Unmute' : 'Mute'}
+              aria-label="Toggle mute"
+            >
+              <i
+                className={`fas fa-volume-${volume === 0 ? 'mute' : volume < 0.5 ? 'down' : 'up'} mp-vol-icon`}
+              />
+            </button>
             <input
               className="mp-vol-slider"
               type="range"
-              min="0" max="1" step="0.02"
+              min="0"
+              max="1"
+              step="0.02"
               value={volume}
-              onChange={e => setVolume(parseFloat(e.target.value))}
-              aria-label="Volume"
+              onChange={(e) => setVolume(parseFloat(e.target.value))}
+              aria-label="Volume slider"
             />
+            <span className="mp-vol-label">{Math.round(volume * 100)}%</span>
           </div>
         </div>
-
       </div>
     </div>
   );
