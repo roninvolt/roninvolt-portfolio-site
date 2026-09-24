@@ -81,6 +81,14 @@ npm install
 npm run dev
 ```
 
+## 🔄 Automatic GitHub Sync
+
+This repository is equipped with an automated Git synchronization daemon that automatically stages, commits, and pushes any local edits directly to GitHub:
+
+- **Run in Background**: `npm run auto-sync` or double-click `start_auto_sync.bat`.
+- **Manual Push**: `npm run push` or run `push_to_github.bat`.
+- Any changes made in the IDE are automatically debounced (5s) and pushed to `origin main`.
+
 ## 📧 Contact & Links
 - **Live Portfolio**: [roninvolt.vercel.app](https://roninvolt.vercel.app/)
 - **Email**: [roninvolt1@gmail.com](mailto:roninvolt1@gmail.com)
