@@ -7,7 +7,9 @@
     "dev": "npm --prefix frontend run dev",
     "prebuild": "npm --prefix frontend install",
     "build": "npm --prefix frontend run build && node -e \"require('fs').cpSync('frontend/dist', 'dist', {recursive: true})\"",
-    "start": "npm --prefix backend start"
+    "start": "npm --prefix backend start",
+    "auto-sync": "node scripts/auto_git_sync.js",
+    "push": "git add -A && git commit -m \"manual sync\" && git push origin main"
   },
   "dependencies": {
     "nodemailer": "^8.0.2"
