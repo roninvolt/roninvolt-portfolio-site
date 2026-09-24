@@ -2,17 +2,22 @@ import React, { useState, useEffect } from 'react';
 import './index.css';
 import './App.css';
 
-import IntroScreen  from './components/IntroScreen';
-import CustomCursor from './components/CustomCursor';
-import Navbar       from './components/Navbar';
-import Hero         from './components/Hero';
-import About        from './components/About';
-import MoodBoard    from './components/MoodBoard';
-import Education    from './components/Education';
-import Experience   from './components/Experience';
-import Skills       from './components/Skills';
-import Projects     from './components/Projects';
-import Contact      from './components/Contact';
+import IntroScreen    from './components/IntroScreen';
+import CustomCursor   from './components/CustomCursor';
+import Navbar         from './components/Navbar';
+import Hero           from './components/Hero';
+import About          from './components/About';
+import MoodBoard      from './components/MoodBoard';
+import Education      from './components/Education';
+import Experience     from './components/Experience';
+import Skills         from './components/Skills';
+import Projects       from './components/Projects';
+import Contact        from './components/Contact';
+import ScrollProgress from './components/ScrollProgress';
+import BackToTop      from './components/BackToTop';
+import SpotlightManager from './components/SpotlightManager';
+import TactileNoise   from './components/TactileNoise';
+import SectionDivider from './components/SectionDivider';
 import { personalData } from './data/portfolioData';
 
 function useReveal() {
@@ -48,18 +53,29 @@ function App() {
       <IntroScreen onComplete={() => setIntro(true)} />
 
       <CustomCursor />
+      <ScrollProgress />
+      <SpotlightManager />
+      <TactileNoise />
+      <BackToTop />
 
       <div style={{ opacity: intro ? 1 : 0, transition: 'opacity 0.6s ease' }}>
         <Navbar />
 
         <main>
           <Hero />
+          <SectionDivider label="ABOUT // 01" />
           <About />
+          <SectionDivider label="MOODBOARD // AUDIO" />
           <MoodBoard />
+          <SectionDivider label="EDUCATION // 02" />
           <Education />
+          <SectionDivider label="EXPERIENCE // 03" />
           <Experience />
+          <SectionDivider label="SKILLS // 04" />
           <Skills />
+          <SectionDivider label="PROJECTS // 05" />
           <Projects />
+          <SectionDivider label="TRANSMISSION // 06" />
           <Contact />
         </main>
 

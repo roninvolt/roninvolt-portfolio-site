@@ -4961,3 +4961,302 @@ body::after {
     transform: translate(1px, -0.5px);
   }
 }
+
+/* ── SPOTLIGHT CARD SYSTEM ──────────────────────────────── */
+.ang-card,
+.skill-mod,
+.stat-block,
+.quick-facts,
+.exp-card-inner,
+.terminal-wrap,
+.featured-wanted-poster,
+.spotlight-card {
+  position: relative;
+}
+
+/* Subtle radial glow following cursor position */
+.ang-card::before,
+.skill-mod::after,
+.stat-block::before,
+.exp-card-inner::after,
+.featured-wanted-poster::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    500px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    rgba(0, 245, 255, 0.08) 0%,
+    rgba(168, 85, 247, 0.03) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.ang-card:hover::before,
+.skill-mod:hover::after,
+.stat-block:hover::before,
+.exp-card-inner:hover::after,
+.featured-wanted-poster:hover::after {
+  opacity: 1;
+}
+
+/* ── BACK TO TOP BUTTON ─────────────────────────────────── */
+.back-to-top-btn:hover {
+  transform: translateY(-3px) scale(1.08) !important;
+  border-color: rgba(0, 245, 255, 0.5) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 245, 255, 0.3) !important;
+}
+
+.back-to-top-btn:hover i {
+  color: #00f0ff !important;
+  transform: translateY(-2px);
+}
+
+.back-to-top-btn:active {
+  transform: translateY(0) scale(0.95) !important;
+}
+
+/* ── SECTION DIVIDER BEAM ───────────────────────────────── */
+.section-divider-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: 1.2rem 5%;
+}
+
+.section-divider-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-divider-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -20%;
+  width: 20%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #00f0ff, transparent);
+  box-shadow: 0 0 8px #00f0ff;
+  animation: dividerBeamTravel 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes dividerBeamTravel {
+  0% { left: -25%; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { left: 105%; opacity: 0; }
+}
+
+/* ── UNIVERSAL RESPONSIVE OVERHAUL ──────────────────────── */
+@media (max-width: 1200px) {
+  .section {
+    padding: 80px 4%;
+  }
+
+  .hero-grid {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .section {
+    padding: 70px 4%;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: left;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+
+  .featured-wanted-poster {
+    grid-template-columns: 1fr !important;
+    gap: 1.8rem !important;
+    padding: 1.8rem 1.4rem !important;
+  }
+
+  .terminal-body {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .t-info {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-bottom: 1.8rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 4%;
+  }
+
+  .hero-section {
+    padding: 90px 4% 50px;
+    min-height: auto;
+  }
+
+  .hero-name-display {
+    gap: 0.5rem;
+  }
+
+  .name-text-holo {
+    font-size: clamp(2.4rem, 10vw, 4.2rem);
+    letter-spacing: -1.5px;
+  }
+
+  .hero-btns {
+    gap: 0.8rem;
+  }
+
+  .btn-hud {
+    padding: 0.75rem 1.3rem;
+    font-size: 0.75rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+    gap: 1.2rem !important;
+  }
+
+  .small-projs {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+    gap: 1.2rem !important;
+  }
+
+  .footer-inner {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 1.5rem !important;
+  }
+
+  .footer-socials {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 0.8rem !important;
+  }
+
+  .back-to-top-btn {
+    bottom: 18px !important;
+    right: 18px !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 48px 3.5%;
+  }
+
+  .section-tag {
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    letter-spacing: 2px;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+    letter-spacing: -1px;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-btns .btn-hud {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .name-hud-tag {
+    font-size: 0.62rem;
+    padding: 3px 8px;
+    letter-spacing: 1.5px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .name-alias-badge {
+    font-size: 1rem;
+    padding: 3px 10px;
+  }
+
+  .name-terminal-meta {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem !important;
+  }
+
+  .stat-block {
+    padding: 1.2rem 1rem !important;
+  }
+
+  .quick-facts {
+    padding: 1.2rem !important;
+  }
+
+  .edu-card {
+    padding: 1.4rem 1.1rem !important;
+    gap: 1rem !important;
+  }
+
+  .exp-card-inner {
+    padding: 1.5rem 1.1rem !important;
+  }
+
+  .exp-controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .skills-grid,
+  .small-projs {
+    grid-template-columns: 1fr !important;
+  }
+
+  .terminal-wrap {
+    border-radius: 8px;
+  }
+
+  .terminal-body {
+    padding: 1.2rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .name-text-holo {
+    font-size: 2.1rem;
+    letter-spacing: -1px;
+  }
+
+  .section-title {
+    font-size: 1.65rem;
+  }
+
+  .btn-hud {
+    padding: 0.65rem 1rem;
+    font-size: 0.7rem;
+  }
+}
