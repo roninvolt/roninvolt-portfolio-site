@@ -37,6 +37,18 @@ const Navbar = () => {
     };
   }, []);
 
+  // Prevent background scrolling when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
   const go = (href) => {
     const el = document.getElementById(href.replace('#', ''));
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -45,8 +57,8 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`navbar${scrolled ? ' scrolled' : ''}`}>
-        <button className="nav-logo" onClick={() => go('#home')}>
+      <nav className={`navbar${scrolled ? ' scrolled' : ''}`} aria-label="Main Navigation">
+        <button className="nav-logo" onClick={() => go('#home')} aria-label="Home">
           <img src="/voxen_logo.jpg" alt="Voxen" className="nav-logo-img" />
           <span className="nav-logo-brand">
             <span className="nav-logo-name">
@@ -71,14 +83,20 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div className="nav-actions">
           <a href={personalData.resumePath} download={personalData.resumeFileName} className="nav-resume-btn">
             Download CV
           </a>
-          <button className="hamburger" onClick={() => setMobileOpen(o => !o)} aria-label="Toggle menu" aria-expanded={mobileOpen}>
-            <span style={{ transform: mobileOpen ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
-            <span style={{ opacity: mobileOpen ? 0 : 1 }} />
-            <span style={{ transform: mobileOpen ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
+          <button
+            className={`hamburger${mobileOpen ? ' open' : ''}`}
+            onClick={() => setMobileOpen(o => !o)}
+            aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav-menu"
+          >
+            <span className="h-line" />
+            <span className="h-line" />
+            <span className="h-line" />
           </button>
         </div>
       </nav>
@@ -91,33 +109,62 @@ const Navbar = () => {
         />
       )}
 
-      <div className={`mobile-menu${mobileOpen ? ' open' : ''}`}>
-        {NAV_ITEMS.map(item => (
+      <div
+        id="mobile-nav-menu"
+        className={`mobile-menu${mobileOpen ? ' open' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation Menu"
+      >
+        <div className="mobile-menu-header">
+          <div className="mobile-menu-brand">
+            <img src="/voxen_logo.jpg" alt="Voxen" className="nav-logo-img" />
+            <span className="mobile-brand-title">{personalData.name}</span>
+          </div>
           <button
-            key={item.label}
-            className={`nav-link${active === item.href.replace('#','') ? ' active' : ''}`}
-            onClick={() => go(item.href)}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-              textAlign: 'left',
-              fontSize: '1.05rem',
-              padding: '8px 4px',
-            }}
+            className="mobile-close-btn"
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close navigation menu"
           >
-            {item.label}
+            <i className="fas fa-times" />
           </button>
-        ))}
-        <a
-          href={personalData.resumePath}
-          download={personalData.resumeFileName}
-          className="nav-resume-btn"
-          style={{ alignSelf: 'flex-start', marginTop: '0.5rem' }}
-        >
-          Download CV
-        </a>
+        </div>
+
+        <div className="mobile-menu-list">
+          {NAV_ITEMS.map((item, idx) => (
+            <button
+              key={item.label}
+              className={`mobile-nav-item${active === item.href.replace('#','') ? ' active' : ''}`}
+              onClick={() => go(item.href)}
+            >
+              <span className="mobile-nav-num">0{idx + 1}</span>
+              <span className="mobile-nav-text">{item.label}</span>
+              <i className="fas fa-chevron-right mobile-nav-arrow" />
+            </button>
+          ))}
+        </div>
+
+        <div className="mobile-menu-footer">
+          <a
+            href={personalData.resumePath}
+            download={personalData.resumeFileName}
+            className="btn-hud btn-hud-primary mobile-cv-btn"
+          >
+            <i className="fas fa-file-download" />
+            DOWNLOAD CV
+          </a>
+          <div className="mobile-menu-socials">
+            <a href={personalData.discord} target="_blank" rel="noopener noreferrer" className="social-btn" aria-label="Discord">
+              <i className="fab fa-discord" />
+            </a>
+            <a href={personalData.github} target="_blank" rel="noopener noreferrer" className="social-btn" aria-label="GitHub">
+              <i className="fab fa-github" />
+            </a>
+            <a href={`mailto:${personalData.email}`} className="social-btn" aria-label="Email">
+              <i className="fas fa-envelope" />
+            </a>
+          </div>
+        </div>
       </div>
     </>
   );

@@ -69,7 +69,7 @@ const MoodBoard = () => {
 
               <div className="mood-img-wrap">
                 <a href={mood.image} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ display: 'block', width: '100%', height: '100%' }}>
-                  <img src={mood.image} alt={mood.title} className="mood-img" />
+                  <img src={mood.image} alt={mood.title} className="mood-img" loading="lazy" decoding="async" />
                   <div className="mood-scanline" />
                 </a>
               </div>

@@ -24,12 +24,38 @@ const Experience = () => {
         </div>
 
         <div className="reveal d1">
-          {/* Controls */}
+          {/* Responsive Process Timeline (Desktop Horizontal, Mobile Vertical 01 | 02 | 03) */}
+          <div className="process-timeline" role="tablist" aria-label="Career Milestones Timeline">
+            <div className="timeline-track">
+              {experienceData.map((item, i) => (
+                <button
+                  key={i}
+                  role="tab"
+                  id={`timeline-tab-${i}`}
+                  aria-selected={i === idx}
+                  aria-controls={`exp-card-${i}`}
+                  className={`timeline-step ${i === idx ? 'active' : ''}`}
+                  onClick={() => setIdx(i)}
+                >
+                  <div className="timeline-node-wrap">
+                    <span className="timeline-node">0{i + 1}</span>
+                    {i < experienceData.length - 1 && <span className="timeline-connector" aria-hidden="true" />}
+                  </div>
+                  <div className="timeline-info">
+                    <span className="timeline-role-label">{item.role}</span>
+                    <span className="timeline-comp-label">{item.company}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Stepper Controls */}
           <div className="exp-controls">
-            <button className="exp-nav-btn" onClick={() => setIdx(i => (i - 1 + experienceData.length) % experienceData.length)} aria-label="Previous" style={{ color: 'var(--cyan)', borderColor: 'rgba(255, 255, 255, 0.15)' }}>
+            <button className="exp-nav-btn" onClick={() => setIdx(i => (i - 1 + experienceData.length) % experienceData.length)} aria-label="Previous milestone" style={{ color: 'var(--cyan)', borderColor: 'rgba(255, 255, 255, 0.15)' }}>
               <i className="fas fa-chevron-left" />
             </button>
-            <button className="exp-nav-btn" onClick={() => setIdx(i => (i + 1) % experienceData.length)} aria-label="Next" style={{ color: 'var(--cyan)', borderColor: 'rgba(255, 255, 255, 0.15)' }}>
+            <button className="exp-nav-btn" onClick={() => setIdx(i => (i + 1) % experienceData.length)} aria-label="Next milestone" style={{ color: 'var(--cyan)', borderColor: 'rgba(255, 255, 255, 0.15)' }}>
               <i className="fas fa-chevron-right" />
             </button>
             <div className="exp-dots">
@@ -38,6 +64,7 @@ const Experience = () => {
                   key={i}
                   className={`exp-dot${i === idx ? ' active' : ''}`}
                   onClick={() => setIdx(i)}
+                  aria-label={`Jump to milestone 0${i + 1}`}
                   style={{
                     backgroundColor: i === idx ? 'var(--cyan)' : 'rgba(255, 255, 255, 0.15)',
                     boxShadow: i === idx ? 'var(--glow-cyan)' : 'none'

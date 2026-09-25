@@ -22,14 +22,16 @@ const Education = () => (
       <div className="ang-card clip edu-card reveal d1" style={{ background: 'rgba(10, 10, 12, 0.9)', borderColor: 'rgba(255, 255, 255, 0.08)' }}>
         <div className="br-tr" style={{ borderColor: 'var(--cyan)' }} />
         <div className="br-bl" style={{ borderColor: 'var(--cyan)' }} />
-        <div className="edu-logo" style={{ borderColor: 'rgba(255, 255, 255, 0.2)', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px', borderRadius: '8px', overflow: 'hidden' }}>
-          <img
-            src="/kgisl_kite_logo.jpg"
-            alt="KGISL Institute of Technology (KiTE)"
-            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-          />
+        <div className="edu-logo-wrapper">
+          <div className="edu-logo">
+            <img
+              src={educationData.logo}
+              alt={educationData.institution}
+              loading="lazy"
+            />
+          </div>
         </div>
-        <div>
+        <div className="edu-content">
           <div className="edu-degree" style={{ fontFamily: 'var(--font-hud)', fontSize: '1rem', fontWeight: 700 }}>
             <MatrixText text={educationData.degree} glitchColor="#00f0ff" />
           </div>
