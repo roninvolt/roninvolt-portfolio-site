@@ -7,6 +7,8 @@ import { personalData, heroData } from '../data/portfolioData';
 
 const Hero = () => {
   const mousePos = useRef({ x: 0, y: 0 });
+  const [activeSkill, setActiveSkill] = React.useState(heroData.badges[0]);
+  const [autoCycle, setAutoCycle] = React.useState(true);
 
   useEffect(() => {
     const onMove = (e) => {
@@ -16,32 +18,44 @@ const Hero = () => {
     return () => window.removeEventListener('mousemove', onMove);
   }, []);
 
+  // Subtle auto-cycle through leveling skills unless user interacted
+  useEffect(() => {
+    if (!autoCycle) return;
+    const interval = setInterval(() => {
+      setActiveSkill((curr) => {
+        const nextIdx = (heroData.badges.findIndex((b) => b.id === curr.id) + 1) % heroData.badges.length;
+        return heroData.badges[nextIdx];
+      });
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [autoCycle]);
+
   return (
     <section id="home" className="hero-section">
       <SectionBg variant="hero" />
       {/* Big background text */}
-      <div className="hero-bg-text" aria-hidden="true" style={{ opacity: 0.03, WebkitTextStroke: '1px var(--cyan)', filter: 'blur(1px)' }}>PORTFOLIO</div>
+      <div className="hero-bg-text" aria-hidden="true" style={{ opacity: 0.04, WebkitTextStroke: '1px var(--cyan)', filter: 'blur(1px)' }}>PORTFOLIO</div>
 
       <div className="hero-grid">
         {/* LEFT TEXT */}
         <div style={{ position: 'relative', zIndex: 1 }}>
           {/* Status */}
-          <div className="hero-status reveal visible" style={{ borderColor: 'rgba(255, 255, 255, 0.15)', background: 'rgba(255, 255, 255, 0.03)', color: 'var(--cyan)' }}>
-            <MatrixText text={personalData.status} glitchColor="#00ff66" autoGlitch={true} glitchInterval={10000} />
+          <div className="hero-status reveal visible" style={{ borderColor: 'rgba(0, 240, 255, 0.2)', background: 'rgba(0, 240, 255, 0.04)', color: 'var(--cyan)' }}>
+            <MatrixText text={personalData.status} glitchColor="var(--green)" autoGlitch={true} glitchInterval={10000} />
           </div>
 
           {/* Name - Ultra Aesthetic Holographic & Decoder System */}
           <HeroName />
 
           {/* HUD data line */}
-          <div className="hero-data reveal visible d1" style={{ color: 'rgba(255, 255, 255, 0.4)', fontFamily: 'var(--font-mono)' }}>
-            <MatrixText text={personalData.hudStatus} glitchColor="#00f0ff" triggerOnHover={true} />
+          <div className="hero-data reveal visible d1" style={{ color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)' }}>
+            <MatrixText text={personalData.hudStatus} glitchColor="var(--cyan)" triggerOnHover={true} />
           </div>
 
           {/* Roles */}
           <div className="hero-role-wrap reveal visible d2" style={{ borderLeftColor: 'var(--cyan)' }}>
             <div className="hero-role-label" style={{ color: 'var(--gold)' }}>
-              <MatrixText text={heroData.objective} glitchColor="#ffd700" />
+              <MatrixText text={heroData.objective} glitchColor="var(--gold)" />
             </div>
             <div className="hero-roles-container">
               <div style={{ animation: 'roleScroll 12s ease-in-out infinite' }}>
@@ -52,7 +66,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <p className="hero-desc reveal visible d3" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+          <p className="hero-desc reveal visible d3" style={{ color: 'rgba(255, 255, 255, 0.75)' }}>
             Engineering intelligent <span className="bio-hl">AI models</span>, <span className="bio-hl">autonomous agents</span>, and deep learning pipelines. 3rd year B.E. AIML student at <span className="bio-hl">KGISL Institute of Technology (KiTE)</span>, Coimbatore, and Founder of <span className="bio-hl">Voxen Development</span>.
           </p>
 
@@ -62,15 +76,15 @@ const Hero = () => {
               <i className="fas fa-code" />
               Explore Projects
             </a>
-            <a href={personalData.discord} target="_blank" rel="noopener noreferrer" className="btn-hud btn-hud-secondary" style={{ borderColor: '#5865F2', color: '#fff', background: 'rgba(88, 101, 242, 0.15)' }} onMouseEnter={e => e.currentTarget.style.boxShadow = '0 0 20px rgba(88, 101, 242, 0.5)'} onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
+            <a href={personalData.discord} target="_blank" rel="noopener noreferrer" className="btn-hud btn-hud-secondary" style={{ borderColor: 'rgba(139, 92, 246, 0.5)', color: '#fff', background: 'rgba(139, 92, 246, 0.18)' }}>
               <i className="fab fa-discord" />
               Join Discord
             </a>
-            <a href={personalData.resumePath} download={personalData.resumeFileName} className="btn-hud btn-hud-ghost" style={{ borderColor: 'rgba(255,255,255,0.2)', color: 'var(--cyan)' }} onMouseEnter={e => e.currentTarget.style.boxShadow = 'var(--glow-cyan)'} onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
+            <a href={personalData.resumePath} download={personalData.resumeFileName} className="btn-hud btn-hud-ghost">
               <i className="fas fa-file-download" />
-              CV
+              Download CV
             </a>
-            <a href="#contact" className="btn-hud btn-hud-ghost" onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--cyan)'; e.currentTarget.style.boxShadow = 'var(--glow-cyan)'; }} onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.boxShadow = 'none'; }}>
+            <a href="#contact" className="btn-hud btn-hud-ghost">
               <i className="fas fa-paper-plane" />
               Contact
             </a>
@@ -78,8 +92,8 @@ const Hero = () => {
 
           {/* Socials */}
           <div className="hero-socials reveal visible d4">
-            <a href={personalData.discord} target="_blank" rel="noopener noreferrer" className="social-btn" aria-label="Discord Server" style={{ borderColor: 'rgba(88, 101, 242, 0.4)' }}>
-              <i className="fab fa-discord" style={{ color: '#5865F2' }} />
+            <a href={personalData.discord} target="_blank" rel="noopener noreferrer" className="social-btn" aria-label="Discord Server" style={{ borderColor: 'rgba(139, 92, 246, 0.4)' }}>
+              <i className="fab fa-discord" style={{ color: 'var(--purple)' }} />
             </a>
             <a href={personalData.github} target="_blank" rel="noopener noreferrer" className="social-btn" aria-label="GitHub">
               <i className="fab fa-github" />
@@ -93,30 +107,136 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* RIGHT: 3D Sphere */}
+        {/* RIGHT: 3D Sphere & Orbital Leveling Matrix */}
         <div className="hero-visual">
           <div className="sphere-outer">
-            {/* HUD Rings */}
-            <div className="hud-ring hud-ring-1" style={{ borderColor: 'rgba(255, 255, 255, 0.15)' }} />
-            <div className="hud-ring hud-ring-2" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
-            <div className="hud-ring hud-ring-3" style={{ borderColor: 'rgba(255, 255, 255, 0.05)' }} />
+            {/* Concentric HUD Rings */}
+            <div className="hud-ring hud-ring-1" />
+            <div className="hud-ring hud-ring-2" />
+            <div className="hud-ring hud-ring-3" />
 
-            {/* Targeting corners */}
-            <div className="sphere-target st-tl" style={{ borderColor: 'var(--cyan)' }} />
-            <div className="sphere-target st-tr" style={{ borderColor: 'var(--cyan)' }} />
-            <div className="sphere-target st-bl" style={{ borderColor: 'var(--cyan)' }} />
-            <div className="sphere-target st-br" style={{ borderColor: 'var(--cyan)' }} />
+            {/* Glowing Equatorial Horizon Line as seen in HUD image */}
+            <div className="hud-equator" aria-hidden="true">
+              <span className="hud-equator-node hen-left" />
+              <span className="hud-equator-line" />
+              <span className="hud-equator-node hen-right" />
+            </div>
 
+            {/* Corner Targeting Brackets [ ] */}
+            <div className="sphere-target st-tl" />
+            <div className="sphere-target st-tr" />
+            <div className="sphere-target st-bl" />
+            <div className="sphere-target st-br" />
+
+            {/* 3D Wireframe Particle Globe */}
             <div className="sphere-canvas">
               <Suspense fallback={null}>
                 <HeroSphere mousePos={mousePos} />
               </Suspense>
             </div>
 
-            {/* Orbit badges */}
-            <div className="orbit-badges" aria-hidden="true">
-              {heroData.badges.map((b, i) => (
-                <div key={b} className="orbit-badge" style={{ animationDelay: `${i * 0.45}s`, borderColor: 'rgba(255, 255, 255, 0.12)', color: 'var(--cyan)', background: 'rgba(10, 10, 12, 0.9)', boxShadow: '0 0 12px rgba(255, 255, 255, 0.08)' }}>{b}</div>
+            {/* 8 Radial Orbital Tech Badges (Clockwise from 12:00) */}
+            <div className="orbit-badges" role="region" aria-label="Orbital Tech Leveling Matrix">
+              {heroData.badges.map((b) => {
+                const isActive = activeSkill.id === b.id;
+                return (
+                  <button
+                    key={b.id}
+                    type="button"
+                    className={`orbit-badge orbit-pos-${b.position} ${isActive ? 'active' : ''}`}
+                    onClick={() => {
+                      setActiveSkill(b);
+                      setAutoCycle(false);
+                    }}
+                    onMouseEnter={() => {
+                      setActiveSkill(b);
+                      setAutoCycle(false);
+                    }}
+                    aria-label={`${b.name} Level ${b.level} ${b.rank}`}
+                  >
+                    <div className="orbit-badge-inner">
+                      <span className="badge-name">{b.name}</span>
+                      <span className="badge-lvl" style={{ color: b.color }}>
+                        LV.{b.level}
+                      </span>
+                    </div>
+                    {/* Glowing XP Progress Pip Track */}
+                    <div className="badge-xp-track" aria-hidden="true">
+                      <div
+                        className="badge-xp-bar"
+                        style={{
+                          width: `${b.xp}%`,
+                          background: `linear-gradient(90deg, ${b.color}, var(--purple))`,
+                        }}
+                      />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Interactive Leveling Telemetry Console */}
+          <div className="leveling-telemetry-panel reveal visible" role="region" aria-label="Skill Leveling Telemetry">
+            <div className="telemetry-header">
+              <div className="telemetry-title">
+                <span className="telemetry-pulse-dot" style={{ background: activeSkill.color, boxShadow: `0 0 10px ${activeSkill.color}` }} />
+                <span className="telemetry-label">PROTOCOL // {activeSkill.name}</span>
+                <span className="telemetry-rank" style={{ color: activeSkill.color }}>[{activeSkill.rank}]</span>
+              </div>
+              <div className="telemetry-lvl-display">
+                <span className="telemetry-lvl-text">LVL.</span>
+                <span className="telemetry-lvl-val" style={{ color: 'var(--gold)' }}>{activeSkill.level}</span>
+                <span className="telemetry-lvl-max">/ 99</span>
+              </div>
+            </div>
+
+            {/* XP Gauge */}
+            <div className="telemetry-xp-wrap">
+              <div className="telemetry-xp-info">
+                <span>EXP: {activeSkill.xpCurrent} / {activeSkill.xpMax}</span>
+                <span style={{ color: 'var(--cyan)' }}>{activeSkill.xp}% MASTERY</span>
+              </div>
+              <div className="telemetry-xp-bar-bg">
+                <div
+                  className="telemetry-xp-bar-fill"
+                  style={{
+                    width: `${activeSkill.xp}%`,
+                    background: `linear-gradient(90deg, ${activeSkill.color}, var(--purple), var(--cyan))`
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Telemetry Details */}
+            <div className="telemetry-details">
+              <div className="telemetry-row">
+                <span className="telemetry-row-label">SPECIALTY:</span>
+                <span className="telemetry-row-val">{activeSkill.specialty}</span>
+              </div>
+              <div className="telemetry-row">
+                <span className="telemetry-row-label">METRICS:</span>
+                <span className="telemetry-row-val" style={{ color: 'rgba(255, 255, 255, 0.7)' }}>{activeSkill.stats}</span>
+              </div>
+            </div>
+
+            {/* Quick-Switch Chip Dock (Touch & Mobile Friendly) */}
+            <div className="telemetry-chips-dock" role="tablist" aria-label="Select Protocol Level">
+              {heroData.badges.map((b) => (
+                <button
+                  key={b.id}
+                  role="tab"
+                  aria-selected={activeSkill.id === b.id}
+                  className={`telemetry-chip ${activeSkill.id === b.id ? 'active' : ''}`}
+                  onClick={() => {
+                    setActiveSkill(b);
+                    setAutoCycle(false);
+                  }}
+                  title={`${b.name} - Level ${b.level}`}
+                >
+                  <span className="chip-name">{b.name.split(' ')[0]}</span>
+                  <span className="chip-lvl" style={{ color: b.color }}>{b.level}</span>
+                </button>
               ))}
             </div>
           </div>

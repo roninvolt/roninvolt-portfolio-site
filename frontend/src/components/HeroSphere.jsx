@@ -28,35 +28,39 @@ function HolographicSphere({ mousePos }) {
       <mesh ref={meshRef} scale={1.8}>
         <sphereGeometry args={[1, 64, 64]} />
         <MeshDistortMaterial
-          color="#060608"
+          color="#090d20"
           attach="material"
-          distort={0.25}
-          speed={1.2}
-          roughness={0.15}
-          metalness={0.95}
+          distort={0.22}
+          speed={1.4}
+          roughness={0.2}
+          metalness={0.9}
           wireframe={false}
         />
       </mesh>
 
-      {/* Wireframe overlay */}
+      {/* Wireframe overlay - Electric Cyan Matrix */}
       <mesh scale={1.85}>
         <sphereGeometry args={[1, 24, 24]} />
         <meshBasicMaterial
-          color="#ffffff"
+          color="#00f0ff"
           wireframe={true}
           transparent={true}
-          opacity={0.12}
+          opacity={0.28}
         />
       </mesh>
 
-      {/* Outer glow rings */}
+      {/* Outer glow rings - Cyber Equatorial & Orbital Circuits */}
       <mesh scale={2.0} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[1, 0.01, 16, 100]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.35} />
+        <torusGeometry args={[1, 0.012, 16, 100]} />
+        <meshBasicMaterial color="#00f0ff" transparent opacity={0.65} />
       </mesh>
       <mesh scale={2.0} rotation={[Math.PI / 3, 0.5, 0]}>
-        <torusGeometry args={[1, 0.008, 16, 100]} />
-        <meshBasicMaterial color="#888888" transparent opacity={0.25} />
+        <torusGeometry args={[1, 0.01, 16, 100]} />
+        <meshBasicMaterial color="#8b5cf6" transparent opacity={0.55} />
+      </mesh>
+      <mesh scale={2.15} rotation={[-Math.PI / 4, 0.8, 0]}>
+        <torusGeometry args={[1, 0.006, 16, 100]} />
+        <meshBasicMaterial color="#00ff9d" transparent opacity={0.3} />
       </mesh>
 
       {/* Particles */}
@@ -66,7 +70,7 @@ function HolographicSphere({ mousePos }) {
 }
 
 function Particles() {
-  const count = 120;
+  const count = 140;
   const ref = useRef();
   const positions = React.useMemo(() => {
     const pos = new Float32Array(count * 3);
@@ -99,10 +103,10 @@ function Particles() {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.025}
-        color="#ffffff"
+        size={0.035}
+        color="#00f0ff"
         transparent
-        opacity={0.6}
+        opacity={0.75}
         sizeAttenuation
       />
     </points>
@@ -116,10 +120,10 @@ const HeroSphere = ({ mousePos }) => {
       gl={{ antialias: true, alpha: true }}
       style={{ background: 'transparent' }}
     >
-      <ambientLight intensity={0.3} />
-      <pointLight position={[10, 10, 10]} intensity={1.5} color="#ffffff" />
-      <pointLight position={[-10, -10, -10]} intensity={0.8} color="#cccccc" />
-      <pointLight position={[0, 10, -5]} intensity={0.5} color="#888888" />
+      <ambientLight intensity={0.4} color="#0c1228" />
+      <pointLight position={[10, 10, 10]} intensity={2.5} color="#00f0ff" />
+      <pointLight position={[-10, -10, -10]} intensity={2.0} color="#8b5cf6" />
+      <pointLight position={[0, 10, -5]} intensity={1.2} color="#00ff9d" />
       <HolographicSphere mousePos={mousePos} />
     </Canvas>
   );
