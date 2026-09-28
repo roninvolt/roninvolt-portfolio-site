@@ -1,6 +1,6 @@
 # Agent Instructions - Auto GitHub Sync
 
-- **Auto-Sync to GitHub**: Every task or change completed in this project MUST be staged, committed, and pushed to the GitHub repository (`https://github.com/roninvolt/roninvolt.git`) on branch `main`.
+- **Auto-Sync to GitHub**: Every task or change completed in this project MUST be staged, committed, and pushed to the GitHub repository (`https://github.com/roninvolt/roninvolt-portfolio-site.git`) on branch `main`.
 - **Command Sequence**:
   ```bash
   git add -A

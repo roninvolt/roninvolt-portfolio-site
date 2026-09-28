@@ -5,7 +5,7 @@ set "PATH=C:\Users\Volt\AppData\Local\Microsoft\WinGet\Packages\Git.MinGit_Micro
 cd /d "%~dp0"
 
 echo ============================================================
-echo   Pushing Portfolio to https://github.com/roninvolt/roninvolt.git
+echo   Pushing Portfolio to https://github.com/roninvolt/roninvolt-portfolio-site.git
 echo ============================================================
 echo.
 
