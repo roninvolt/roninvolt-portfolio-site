@@ -33,6 +33,7 @@ const HeroName = () => {
         target
           .split('')
           .map((char, index) => {
+            if (char === ' ') return ' ';
             if (index < iteration / 5) {
               return char;
             }
@@ -110,14 +111,6 @@ const HeroName = () => {
       {/* Ripple ring on click */}
       {showBurst && <div className="name-burst-ring" />}
 
-      {/* Top HUD Tag */}
-      <div className="name-hud-tag">
-        <span className="name-hud-dot" />
-        <MatrixText text="SYS_CORE // NEURAL_AI" glitchColor="#00ff66" />
-        <span style={{ opacity: 0.35 }}>|</span>
-        <span style={{ color: 'var(--cyan)' }}>ONLINE [2026]</span>
-      </div>
-
       {/* 3D Tilt Wrapper */}
       <div
         className="name-tilt-wrap"
@@ -139,7 +132,7 @@ const HeroName = () => {
                   key={idx}
                   className={`name-char ${!isDecoded ? 'scrambled' : ''}`}
                 >
-                  {ch}
+                  {ch === ' ' ? '\u00A0' : ch}
                 </span>
               );
             })}

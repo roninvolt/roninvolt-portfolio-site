@@ -1156,14 +1156,14 @@ body::after {
   position: relative;
   overflow: hidden;
   width: 100%;
-  padding-block: clamp(5.5rem, 10vw, 8rem) clamp(2.5rem, 5vw, 4rem);
+  padding-block: clamp(4.5rem, 7vh, 6rem) clamp(1.5rem, 3vh, 2.5rem);
   padding-inline: max(16px, calc((100% - 1340px) / 2));
 }
 
 .hero-grid {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
-  gap: clamp(2rem, 4vw, 4rem);
+  gap: clamp(1.5rem, 3vw, 3rem);
   align-items: center;
   max-width: 1400px;
   width: 100%;
@@ -1200,13 +1200,13 @@ body::after {
   gap: 8px;
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--green);
   border: 1px solid rgba(0, 255, 65, 0.25);
   padding: 5px 14px;
   background: rgba(0, 255, 65, 0.05);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.85rem;
   clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
 }
 
@@ -1350,12 +1350,12 @@ body::after {
 /* The Core Name Header Display */
 .hero-name-display {
   display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.85rem;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: clamp(0.4rem, 1vw, 0.75rem);
   margin: 0;
   padding: 0;
-  line-height: 0.95;
+  line-height: 1;
   filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.28)) drop-shadow(0 0 45px rgba(0, 245, 255, 0.2));
   transition: filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1367,10 +1367,13 @@ body::after {
 /* Liquid Holographic Chrome Gradient Text */
 .name-text-holo {
   font-family: var(--font-hud);
-  font-size: clamp(2.8rem, 7.8vw, 6.4rem);
+  font-size: clamp(2rem, 4.4vw, 4.2rem);
   font-weight: 900;
-  letter-spacing: -2.5px;
+  letter-spacing: -1px;
   text-transform: uppercase;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: baseline;
   background: linear-gradient(
     115deg,
     #ffffff 0%,
@@ -1387,13 +1390,12 @@ body::after {
   background-clip: text;
   animation: holoChromeFlow 7s ease-in-out infinite alternate;
   position: relative;
-  display: inline-block;
   transition: letter-spacing 0.35s ease;
 }
 
 .hero-name-container:hover .name-text-holo {
   animation: holoChromeFlowFast 3s linear infinite;
-  letter-spacing: -1.5px;
+  letter-spacing: -0.5px;
 }
 
 @keyframes holoChromeFlow {
@@ -1420,6 +1422,7 @@ body::after {
 /* Individual character & decoder styling */
 .name-char {
   display: inline-block;
+  white-space: pre;
   transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1434,7 +1437,7 @@ body::after {
 /* Divider Slash */
 .name-divider-slash {
   font-family: var(--font-hud);
-  font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+  font-size: clamp(1.1rem, 2.2vw, 2rem);
   font-weight: 300;
   color: rgba(255, 255, 255, 0.3);
   margin: 0 2px;
@@ -1459,14 +1462,15 @@ body::after {
 .name-alias-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-family: var(--font-mono);
-  font-size: clamp(1.15rem, 2.8vw, 2.2rem);
+  font-size: clamp(0.9rem, 1.4vw, 1.25rem);
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
   color: rgba(255, 255, 255, 0.85);
   background: rgba(255, 255, 255, 0.04);
-  padding: 4px 14px;
+  padding: 3px 12px;
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(12px);
@@ -1656,20 +1660,20 @@ body::after {
 }
 
 .hero-desc {
-  font-size: 1rem;
-  color: rgba(224, 240, 255, 0.55);
-  line-height: 1.8;
+  font-size: clamp(0.85rem, 1.05vw, 0.95rem);
+  color: rgba(224, 240, 255, 0.65);
+  line-height: 1.7;
   max-width: 550px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.35rem;
   font-family: var(--font-body);
 }
 
 /* Buttons */
 .hero-btns {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.35rem;
 }
 
 .btn-hud {
@@ -1786,20 +1790,21 @@ body::after {
 /* ── HERO VISUAL (3D Sphere area) ───────────────────────── */
 .hero-visual {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   width: 100%;
   max-width: 100%;
-  min-height: clamp(280px, 40vw, 480px);
+  gap: 1.25rem;
   overflow: visible;
 }
 
 /* ── HERO 3D SPHERE & ORBITAL LEVELING MATRIX ─────────── */
 .sphere-outer {
   position: relative;
-  width: clamp(340px, 30vw, 440px);
-  height: clamp(340px, 30vw, 440px);
+  width: clamp(280px, 24vw, 380px);
+  height: clamp(280px, 24vw, 380px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2066,9 +2071,9 @@ body::after {
 
 /* ── LEVELING TELEMETRY CONSOLE ──────────────────────────── */
 .leveling-telemetry-panel {
-  width: min(100%, 460px);
-  margin: 1.5rem auto 0;
-  padding: 1rem 1.2rem;
+  width: min(100%, 420px);
+  margin: 0 auto;
+  padding: 0.85rem 1.1rem;
   background: linear-gradient(180deg, rgba(14, 20, 42, 0.85) 0%, rgba(9, 13, 26, 0.95) 100%);
   border: 1px solid rgba(0, 240, 255, 0.2);
   clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
@@ -5886,10 +5891,122 @@ canvas {
   }
 }
 
-/* ── 2. LAPTOP & SMALL DESKTOP (<= 1280px) ──────────────────── */
-@media (max-width: 1280px) {
+/* ── 2. LAPTOP & COMPACT DESKTOP (<= 1440px) ─────────────────── */
+@media (max-width: 1440px) {
+  .hero-section {
+    padding-block: clamp(4.2rem, 7vh, 5.5rem) clamp(1.5rem, 3vh, 2.5rem);
+  }
   .hero-grid {
-    gap: 3rem;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: clamp(1.2rem, 2vw, 2.2rem);
+  }
+  .sphere-outer {
+    width: clamp(260px, 21vw, 330px);
+    height: clamp(260px, 21vw, 330px);
+  }
+  .leveling-telemetry-panel {
+    width: min(100%, 390px);
+    padding: 0.75rem 0.95rem;
+  }
+  .telemetry-title {
+    font-size: 0.72rem;
+  }
+  .telemetry-lvl-val {
+    font-size: 1.05rem;
+  }
+  .name-text-holo {
+    font-size: clamp(1.9rem, 3.8vw, 3.4rem);
+    letter-spacing: -0.8px;
+  }
+  .name-alias-badge {
+    font-size: clamp(0.85rem, 1.3vw, 1.15rem);
+    padding: 3px 10px;
+  }
+  .hero-desc {
+    font-size: 0.88rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.65;
+  }
+  .hero-btns {
+    margin-bottom: 1.2rem;
+    gap: 0.65rem;
+  }
+  .btn-hud {
+    padding: 0.65rem 1.35rem;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+  }
+  .hero-socials {
+    gap: 0.65rem;
+  }
+  .social-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 0.88rem;
+  }
+}
+
+/* Height-constrained laptop screens (<= 850px viewport height) */
+@media (max-height: 850px) and (min-width: 769px) {
+  .hero-section {
+    padding-block: 4.2rem 1.2rem;
+    min-height: calc(100vh - 20px);
+  }
+  .hero-status {
+    margin-bottom: 0.6rem;
+    font-size: 0.62rem;
+    padding: 4px 10px;
+  }
+  .name-scanbeam-bar {
+    margin-top: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+  .name-terminal-meta {
+    font-size: 0.75rem;
+    letter-spacing: 1.8px;
+  }
+  .hero-role-wrap {
+    margin-bottom: 1rem;
+    padding-left: 10px;
+  }
+  .hero-roles-container {
+    height: 1.8rem;
+  }
+  .hero-role {
+    height: 1.8rem;
+    font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+  }
+  .hero-desc {
+    font-size: 0.84rem;
+    margin-bottom: 1rem;
+    line-height: 1.55;
+  }
+  .hero-btns {
+    margin-bottom: 1rem;
+    gap: 0.6rem;
+  }
+  .btn-hud {
+    padding: 0.58rem 1.2rem;
+    font-size: 0.7rem;
+  }
+  .sphere-outer {
+    width: clamp(230px, 19vw, 290px);
+    height: clamp(230px, 19vw, 290px);
+  }
+  .leveling-telemetry-panel {
+    width: min(100%, 370px);
+    padding: 0.6rem 0.85rem;
+  }
+  .telemetry-header {
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.35rem;
+  }
+  .telemetry-row {
+    font-size: 0.68rem;
+  }
+  .telemetry-chip {
+    padding: 2px 7px;
+    font-size: 0.58rem;
   }
 }
 

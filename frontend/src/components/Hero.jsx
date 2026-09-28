@@ -47,11 +47,6 @@ const Hero = () => {
           {/* Name - Ultra Aesthetic Holographic & Decoder System */}
           <HeroName />
 
-          {/* HUD data line */}
-          <div className="hero-data reveal visible d1" style={{ color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-mono)' }}>
-            <MatrixText text={personalData.hudStatus} glitchColor="var(--cyan)" triggerOnHover={true} />
-          </div>
-
           {/* Roles */}
           <div className="hero-role-wrap reveal visible d2" style={{ borderLeftColor: 'var(--cyan)' }}>
             <div className="hero-role-label" style={{ color: 'var(--gold)' }}>
