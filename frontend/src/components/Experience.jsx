@@ -112,6 +112,14 @@ const Experience = () => {
             </div>
             <div className="exp-period" style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)' }}>WORK PERIOD — {exp.period}</div>
 
+            {exp.highlights && (
+              <ul style={{ margin: '1rem 0 1.2rem', paddingLeft: '1.2rem', color: 'rgba(255, 255, 255, 0.75)', fontFamily: 'var(--font-body)', fontSize: '0.85rem', lineHeight: '1.6' }}>
+                {exp.highlights.map((h, i) => (
+                  <li key={i} style={{ marginBottom: '0.4rem' }}>{h}</li>
+                ))}
+              </ul>
+            )}
+
             <div className="exp-skills">
               {exp.skills.map(s => (
                 <span

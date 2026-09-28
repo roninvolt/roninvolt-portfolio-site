@@ -36,9 +36,16 @@ const Education = () => (
             <MatrixText text={educationData.degree} glitchColor="#00f0ff" />
           </div>
           <div className="edu-school" style={{ color: 'var(--cyan)', fontFamily: 'var(--font-body)', fontSize: '0.85rem' }}>{educationData.institution}</div>
-          <span className="edu-pill" style={{ color: 'var(--cyan)', borderColor: 'rgba(255, 255, 255, 0.25)', background: 'rgba(255, 255, 255, 0.03)' }}>
-            <i className="fas fa-graduation-cap" style={{ marginRight: 5 }} /> {educationData.period}
-          </span>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '6px' }}>
+            <span className="edu-pill" style={{ color: 'var(--cyan)', borderColor: 'rgba(255, 255, 255, 0.25)', background: 'rgba(255, 255, 255, 0.03)' }}>
+              <i className="fas fa-graduation-cap" style={{ marginRight: 5 }} /> {educationData.period}
+            </span>
+            {educationData.scores?.map((sc) => (
+              <span key={sc.label} className="edu-pill" style={{ color: 'rgba(255, 255, 255, 0.75)', borderColor: 'rgba(255, 255, 255, 0.12)', background: 'rgba(255, 255, 255, 0.02)' }}>
+                <i className="fas fa-certificate" style={{ marginRight: 5, color: '#00ff66' }} /> {sc.label}: <strong style={{ color: '#fff' }}>{sc.val}</strong>
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
