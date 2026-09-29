@@ -58,10 +58,10 @@ function App() {
       <TactileNoise />
       <BackToTop />
 
-      <div style={{ opacity: intro ? 1 : 0, transition: 'opacity 0.6s ease' }}>
+      <div className="main-content-wrap" style={{ opacity: intro ? 1 : 0, transition: 'opacity 0.6s ease', width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
         <Navbar />
 
-        <main>
+        <main style={{ width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
           <Hero />
           <SectionDivider label="ABOUT // 01" />
           <About />

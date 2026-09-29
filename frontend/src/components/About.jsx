@@ -20,7 +20,7 @@ const About = () => (
       </div>
 
       <div className="about-grid">
-        <div className="reveal d1">
+        <div className="reveal d1" style={{ minWidth: 0, width: '100%', maxWidth: '100%' }}>
           <div className="about-bio" style={{ color: 'rgba(255, 255, 255, 0.75)', fontFamily: 'var(--font-body)' }}>
             <p>
               I'm <span className="bio-hl">{personalData.fullName}</span> — an <span className="bio-hl">AI/ML Engineer</span>, <span className="bio-hl">TEDx Speaker</span>, and the Founder &amp; Developer of <span className="bio-hl">Voxen Development</span>, operating out of Coimbatore, Tamil Nadu, India.
@@ -51,7 +51,10 @@ const About = () => (
               textDecoration: 'none',
               transition: 'all 0.3s ease',
               position: 'relative',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              width: '100%',
+              maxWidth: '100%',
+              boxSizing: 'border-box'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = '#e62b1e';
@@ -101,7 +104,7 @@ const About = () => (
           </a>
         </div>
 
-        <div className="reveal d2">
+        <div className="reveal d2" style={{ minWidth: 0, width: '100%', maxWidth: '100%' }}>
           <div className="stats-grid">
             {aboutData.stats.map(({ num, lbl }, idx) => (
               <div key={lbl} className="stat-block">

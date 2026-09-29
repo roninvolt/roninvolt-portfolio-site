@@ -38,7 +38,7 @@ const Hero = () => {
 
       <div className="hero-grid">
         {/* LEFT TEXT */}
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        <div className="hero-content-col" style={{ position: 'relative', zIndex: 1, minWidth: 0, width: '100%', maxWidth: '100%' }}>
           {/* Status */}
           <div className="hero-status reveal visible" style={{ borderColor: 'rgba(0, 240, 255, 0.2)', background: 'rgba(0, 240, 255, 0.04)', color: 'var(--cyan)' }}>
             <MatrixText text={personalData.status} glitchColor="var(--green)" autoGlitch={true} glitchInterval={10000} />

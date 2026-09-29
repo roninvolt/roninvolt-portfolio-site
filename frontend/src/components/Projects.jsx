@@ -204,13 +204,23 @@ const Projects = () => {
         </div>
 
         {/* Voxen Platform Projects */}
-        <div className="reveal" style={{ margin: '3rem 0 1.2rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.07)' }} />
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.65rem', letterSpacing: '3px', color: 'var(--cyan)', whiteSpace: 'nowrap' }}>
-              <i className="fas fa-cubes" style={{ marginRight: 8 }} />VOXEN PLATFORM & ECOSYSTEM ARCHITECTURE
+        <div className="reveal" style={{ margin: '3rem 0 1.2rem', width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', width: '100%', maxWidth: '100%' }}>
+            <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.07)', minWidth: '10px' }} />
+            <span
+              className="projects-platform-divider-label"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: 'clamp(0.55rem, 2vw, 0.65rem)',
+                letterSpacing: 'clamp(1px, 0.4vw, 3px)',
+                color: 'var(--cyan)',
+                textAlign: 'center',
+                lineHeight: 1.4
+              }}
+            >
+              <i className="fas fa-cubes" style={{ marginRight: 6 }} />VOXEN PLATFORM &amp; ECOSYSTEM ARCHITECTURE
             </span>
-            <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.07)' }} />
+            <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.07)', minWidth: '10px' }} />
           </div>
         </div>
         <div className="small-projs">
