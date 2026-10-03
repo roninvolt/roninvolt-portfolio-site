@@ -3,12 +3,3 @@
   position: relative;
   min-height: 100vh;
 }
-
-.app-container,
-.main-content-wrap,
-main {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;
-  position: relative;
-}

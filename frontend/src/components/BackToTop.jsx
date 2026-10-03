@@ -82,14 +82,14 @@ const BackToTop = () => {
           cy="23"
           r="18"
           fill="none"
-          stroke="var(--cyan, #00f0ff)"
+          stroke="var(--cyan, #ffffff)"
           strokeWidth="2"
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
           style={{
             transition: 'stroke-dashoffset 0.1s linear',
-            filter: 'drop-shadow(0 0 4px #00f0ff)',
+            filter: 'drop-shadow(0 0 4px rgba(255, 255, 255, 0.6))',
           }}
         />
       </svg>

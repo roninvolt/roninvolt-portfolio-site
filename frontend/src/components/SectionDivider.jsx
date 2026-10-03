@@ -20,7 +20,7 @@ const SectionDivider = ({ label = 'SYS.NODE' }) => {
         style={{
           width: '100%',
           height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1) 20%, rgba(0, 245, 255, 0.35) 50%, rgba(255, 255, 255, 0.1) 80%, transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08) 20%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.08) 80%, transparent)',
           position: 'relative',
         }}
       >
@@ -32,11 +32,11 @@ const SectionDivider = ({ label = 'SYS.NODE' }) => {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '6px',
-            height: '6px',
-            background: '#00f0ff',
+            width: '5px',
+            height: '5px',
+            background: '#ffffff',
             borderRadius: '50%',
-            boxShadow: '0 0 8px #00f0ff, 0 0 16px rgba(0, 245, 255, 0.5)',
+            boxShadow: '0 0 8px rgba(255, 255, 255, 0.9), 0 0 16px rgba(255, 255, 255, 0.4)',
           }}
         />
       </div>

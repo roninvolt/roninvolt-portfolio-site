@@ -39,8 +39,8 @@ const ScrollProgress = () => {
           width: '100%',
           transformOrigin: 'left',
           transform: `scaleX(${progress})`,
-          background: 'linear-gradient(90deg, #00f0ff 0%, #a855f7 50%, #00ff66 100%)',
-          boxShadow: '0 0 10px rgba(0, 240, 255, 0.8), 0 0 20px rgba(168, 85, 247, 0.5)',
+          background: 'linear-gradient(90deg, rgba(255, 255, 255, 0.4) 0%, #ffffff 50%, #d4d4d8 100%)',
+          boxShadow: '0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.25)',
           transition: 'transform 0.08s ease-out',
         }}
       />

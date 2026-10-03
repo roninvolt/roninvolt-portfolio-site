@@ -1,25 +1,25 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 
-// Matrix Katakana, binary, hex, and cyber glyphs
-const MATRIX_CHARS = '01XYZ#$<>[]{}+*&%~!?/0123456789_░▒▓';
+// Refined, minimalist capital alphanumeric character set for subtle unscramble
+const SLEEK_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 const MatrixText = ({
   text,
   children,
   as: Component = 'span',
   className = '',
-  glitchColor = '#00ff66',
+  glitchColor = '#ffffff', // Defaults to clean white
   triggerOnHover = true,
   autoGlitch = false,
-  glitchInterval = 8000,
-  speed = 28,
+  glitchInterval = 9000,
+  speed = 24,
   style = {},
   ...rest
 }) => {
   const content = typeof text === 'string' ? text : (typeof children === 'string' ? children : '');
   const [displayText, setDisplayText] = useState(content);
-  const [isGlitching, setIsGlitching] = useState(false);
-  const isGlitchingRef = useRef(false);
+  const [isShimmering, setIsShimmering] = useState(false);
+  const isAnimatingRef = useRef(false);
   const timerRef = useRef(null);
   const autoTimerRef = useRef(null);
 
@@ -27,16 +27,16 @@ const MatrixText = ({
     setDisplayText(content);
   }, [content]);
 
-  const triggerGlitch = useCallback(() => {
-    if (isGlitchingRef.current || !content) return;
-    isGlitchingRef.current = true;
-    setIsGlitching(true);
+  const triggerAestheticEffect = useCallback(() => {
+    if (isAnimatingRef.current || !content) return;
+    isAnimatingRef.current = true;
+    setIsShimmering(true);
 
     if (timerRef.current) clearInterval(timerRef.current);
 
     const length = content.length;
     let iteration = 0;
-    const maxIterations = Math.max(10, Math.floor(length * 2.5));
+    const maxIterations = Math.max(8, Math.floor(length * 1.8));
 
     timerRef.current = setInterval(() => {
       iteration++;
@@ -45,11 +45,11 @@ const MatrixText = ({
         content
           .split('')
           .map((char, index) => {
-            if (char === ' ' || char === '\n') return char;
+            if (char === ' ' || char === '\n' || char === '/' || char === ':' || char === '-') return char;
             if (index < (iteration / maxIterations) * length) {
               return char;
             }
-            return MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
+            return SLEEK_CHARS[Math.floor(Math.random() * SLEEK_CHARS.length)];
           })
           .join('')
       );
@@ -58,8 +58,8 @@ const MatrixText = ({
         clearInterval(timerRef.current);
         timerRef.current = null;
         setDisplayText(content);
-        isGlitchingRef.current = false;
-        setIsGlitching(false);
+        isAnimatingRef.current = false;
+        setTimeout(() => setIsShimmering(false), 250);
       }
     }, speed);
   }, [content, speed]);
@@ -67,18 +67,18 @@ const MatrixText = ({
   useEffect(() => {
     if (autoGlitch) {
       autoTimerRef.current = setInterval(() => {
-        triggerGlitch();
+        triggerAestheticEffect();
       }, glitchInterval);
     }
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
       if (autoTimerRef.current) clearInterval(autoTimerRef.current);
     };
-  }, [autoGlitch, glitchInterval, triggerGlitch]);
+  }, [autoGlitch, glitchInterval, triggerAestheticEffect]);
 
   const handleMouseEnter = (e) => {
     if (triggerOnHover) {
-      triggerGlitch();
+      triggerAestheticEffect();
     }
     if (rest.onMouseEnter) rest.onMouseEnter(e);
   };
@@ -89,24 +89,25 @@ const MatrixText = ({
 
   return (
     <Component
-      className={`matrix-glitch-wrap ${isGlitching ? 'glitching' : ''} ${className}`}
+      className={`aesthetic-text-wrap matrix-glitch-wrap ${isShimmering ? 'shimmering glitching' : ''} ${className}`}
       data-text={content}
       onMouseEnter={handleMouseEnter}
       style={{ cursor: triggerOnHover ? 'pointer' : 'inherit', ...style }}
       {...rest}
     >
       {displayText.split('').map((char, idx) => {
-        const isGlitchChar = isGlitching && char !== content[idx];
+        const isCycling = isShimmering && char !== content[idx];
         return (
           <span
             key={idx}
-            className={`matrix-char ${isGlitchChar ? 'is-matrix' : ''}`}
+            className={`aesthetic-char matrix-char ${isCycling ? 'is-cycling is-matrix' : ''}`}
             style={
-              isGlitchChar
+              isCycling
                 ? {
-                    color: glitchColor,
-                    WebkitTextFillColor: glitchColor,
-                    textShadow: `0 0 8px ${glitchColor}, 0 0 16px ${glitchColor}`,
+                    color: '#ffffff',
+                    WebkitTextFillColor: '#ffffff',
+                    textShadow: '0 0 10px rgba(255, 255, 255, 0.7)',
+                    opacity: 0.85,
                   }
                 : undefined
             }

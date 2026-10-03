@@ -72,19 +72,41 @@ const MusicPlayer = ({ isStatic = false }) => {
     };
   }, []);
 
-  /* Autoplay handling with fallback */
+  /* Singleton audio instance management — guarantees audio NEVER plays in double */
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    let hasStarted = false;
+
+    // Immediately stop any existing global audio element or rogue audio instances in DOM
+    if (typeof window !== 'undefined') {
+      if (window.__RONINVOLT_AUDIO__ && window.__RONINVOLT_AUDIO__ !== audio) {
+        try {
+          window.__RONINVOLT_AUDIO__.pause();
+          window.__RONINVOLT_AUDIO__.currentTime = 0;
+          window.__RONINVOLT_AUDIO__.src = '';
+        } catch (_) {}
+      }
+      window.__RONINVOLT_AUDIO__ = audio;
+
+      // Clean up any extra orphan audio elements in the document
+      document.querySelectorAll('audio').forEach(el => {
+        if (el !== audio) {
+          try {
+            el.pause();
+            el.currentTime = 0;
+          } catch (_) {}
+        }
+      });
+    }
+
+    let isDisposed = false;
 
     const playAudio = () => {
-      if (hasStarted || !audioRef.current) return;
+      if (isDisposed || !audioRef.current) return;
       audioRef.current
         .play()
         .then(() => {
-          hasStarted = true;
-          setIsPlaying(true);
+          if (!isDisposed) setIsPlaying(true);
           removeListeners();
         })
         .catch(() => {});
@@ -98,6 +120,7 @@ const MusicPlayer = ({ isStatic = false }) => {
       document.removeEventListener('pointerdown', playAudio);
     };
 
+    // Attempt playback
     playAudio();
 
     window.addEventListener('click', playAudio, { once: true });
@@ -106,7 +129,16 @@ const MusicPlayer = ({ isStatic = false }) => {
     window.addEventListener('scroll', playAudio, { once: true, passive: true });
     document.addEventListener('pointerdown', playAudio, { once: true });
 
-    return () => removeListeners();
+    return () => {
+      isDisposed = true;
+      removeListeners();
+      if (audio) {
+        audio.pause();
+      }
+      if (typeof window !== 'undefined' && window.__RONINVOLT_AUDIO__ === audio) {
+        window.__RONINVOLT_AUDIO__ = null;
+      }
+    };
   }, []);
 
   const togglePlay = () => {
@@ -162,8 +194,7 @@ const MusicPlayer = ({ isStatic = false }) => {
     <div className={`mp-widget ${isPlaying ? 'is-playing' : ''}`}>
       <audio
         ref={audioRef}
-        src={encodeURI('/CKay - Love Nwantiti.mp3')}
-        autoPlay
+        src={encodeURI('/Tyler Durden.mp3')}
         loop={isLooping}
         preload="auto"
       />
@@ -184,7 +215,7 @@ const MusicPlayer = ({ isStatic = false }) => {
           <span className="mp-status-text">{isPlaying ? 'STREAMING AUDIO' : 'AUDIO PAUSED'}</span>
           <span className="mp-status-divider">|</span>
           <span className="mp-status-specs">
-            <MatrixText text="HI-RES // 320 KBPS" glitchColor="#00ff66" />
+            <MatrixText text="HI-RES // 320 KBPS" glitchColor="#ffffff" />
           </span>
         </div>
 
@@ -206,7 +237,7 @@ const MusicPlayer = ({ isStatic = false }) => {
             <div className={`mp-vinyl-disc ${isPlaying ? 'spinning' : ''}`}>
               <div className="mp-vinyl-grooves" />
               <div className="mp-vinyl-center">
-                <img src="/voxen_logo.jpg" alt="Voxen Audio" className="mp-vinyl-artwork" />
+                <img src="/tyler_durden_1.jpg" alt="Tyler Durden Audio" className="mp-vinyl-artwork" />
                 <div className="mp-vinyl-spindle" />
               </div>
             </div>
@@ -216,11 +247,11 @@ const MusicPlayer = ({ isStatic = false }) => {
 
           <div className="mp-info">
             <div className="mp-title">
-              <MatrixText text="LOVE NWANTITI" glitchColor="#00f0ff" triggerOnHover={true} />
+              <MatrixText text="TYLER DURDEN" glitchColor="#ffffff" triggerOnHover={true} />
             </div>
             <div className="mp-artist">
-              <i className="fas fa-music" style={{ fontSize: '0.65rem', marginRight: '6px', color: '#00f0ff' }} />
-              CKay
+              <i className="fas fa-music" style={{ fontSize: '0.65rem', marginRight: '6px', color: '#ffffff' }} />
+              Tyler Durden
             </div>
             <div className="mp-badge-row">
               <span className="mp-badge">ORIGINAL SOUNDTRACK</span>

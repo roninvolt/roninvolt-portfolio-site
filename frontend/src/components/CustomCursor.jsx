@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const CustomCursor = () => {
   const outerRef = useRef(null);
+  const dotRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [isTouch, setIsTouch] = useState(false);
   const pos = useRef({ x: -100, y: -100 });
@@ -20,6 +21,10 @@ const CustomCursor = () => {
     const loop = () => {
       smooth.current.x += (pos.current.x - smooth.current.x) * 0.18;
       smooth.current.y += (pos.current.y - smooth.current.y) * 0.18;
+      if (dotRef.current) {
+        dotRef.current.style.left = pos.current.x + 'px';
+        dotRef.current.style.top  = pos.current.y + 'px';
+      }
       if (outerRef.current) {
         outerRef.current.style.left = smooth.current.x + 'px';
         outerRef.current.style.top  = smooth.current.y + 'px';
@@ -52,35 +57,44 @@ const CustomCursor = () => {
   if (isTouch) return null;
 
   return (
-    <div
-      ref={outerRef}
-      style={{
-        position: 'fixed',
-        width: '40px',
-        height: '40px',
-        pointerEvents: 'none',
-        zIndex: 99999,
-        transform: `translate(-50%, -50%) scale(${hovered ? 1.35 : 1}) rotate(${hovered ? '12deg' : '0deg'})`,
-        transition: 'transform 0.15s ease-out',
-        left: '-100px',
-        top: '-100px',
-      }}
-    >
-      {/* Straw Hat (Mugiwara) SVG */}
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Straw Hat base shadow */}
-        <path d="M4 22C4 20 36 20 36 22C36 25 4 25 4 22Z" fill="#ffcc00" opacity="0.18" filter="blur(1px)"/>
-        
-        {/* Yellow Crown */}
-        <path d="M12 21C12 11 28 11 28 21Z" fill="#e6c687" stroke="#b89b60" strokeWidth="1"/>
-        
-        {/* Red Ribbon */}
-        <path d="M12.1 19C18 18 22 18 27.9 19L28 21C22 20 18 20 12 21Z" fill="#ff1e27"/>
-        
-        {/* Yellow Brim */}
-        <path d="M3 22C3 19.5 37 19.5 37 22C37 24.5 3 24.5 3 22Z" fill="#e6c687" stroke="#b89b60" strokeWidth="1"/>
-      </svg>
-    </div>
+    <>
+      {/* Precision Center Dot */}
+      <div
+        ref={dotRef}
+        style={{
+          position: 'fixed',
+          width: '5px',
+          height: '5px',
+          background: '#ffffff',
+          borderRadius: '50%',
+          pointerEvents: 'none',
+          zIndex: 100000,
+          left: '-100px',
+          top: '-100px',
+          transform: 'translate(-50%, -50%)',
+          boxShadow: '0 0 6px rgba(255, 255, 255, 0.9)',
+        }}
+      />
+      {/* Smooth Outer Ring */}
+      <div
+        ref={outerRef}
+        style={{
+          position: 'fixed',
+          width: hovered ? '44px' : '32px',
+          height: hovered ? '44px' : '32px',
+          pointerEvents: 'none',
+          zIndex: 99999,
+          borderRadius: '50%',
+          border: hovered ? '1.5px solid #ffffff' : '1px solid rgba(255, 255, 255, 0.35)',
+          background: hovered ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.02)',
+          boxShadow: hovered ? '0 0 20px rgba(255, 255, 255, 0.25)' : 'none',
+          transform: 'translate(-50%, -50%)',
+          transition: 'width 0.25s cubic-bezier(0.16, 1, 0.3, 1), height 0.25s cubic-bezier(0.16, 1, 0.3, 1), border 0.2s ease, background 0.2s ease, box-shadow 0.2s ease',
+          left: '-100px',
+          top: '-100px',
+        }}
+      />
+    </>
   );
 };
 

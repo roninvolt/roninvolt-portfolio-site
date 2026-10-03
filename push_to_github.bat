@@ -1,7 +1,10 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "PATH=C:\Users\Volt\AppData\Local\Microsoft\WinGet\Packages\Git.MinGit_Microsoft.Winget.Source_8wekyb3d8bbwe\cmd;C:\Users\Volt\AppData\Local\Microsoft\WinGet\Packages\Git.MinGit_Microsoft.Winget.Source_8wekyb3d8bbwe\mingw64\bin;%PATH%"
+where git >nul 2>&1
+if %errorlevel% neq 0 (
+    set "PATH=C:\Program Files\Git\cmd;C:\Users\Volt\AppData\Local\Microsoft\WinGet\Packages\Git.MinGit_Microsoft.Winget.Source_8wekyb3d8bbwe\cmd;C:\Users\Volt\AppData\Local\Microsoft\WinGet\Packages\Git.MinGit_Microsoft.Winget.Source_8wekyb3d8bbwe\mingw64\bin;%PATH%"
+)
 cd /d "%~dp0"
 
 echo ============================================================

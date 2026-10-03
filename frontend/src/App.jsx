@@ -58,14 +58,14 @@ function App() {
       <TactileNoise />
       <BackToTop />
 
-      <div className="main-content-wrap" style={{ opacity: intro ? 1 : 0, transition: 'opacity 0.6s ease', width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
+      <div style={{ opacity: intro ? 1 : 0, transition: 'opacity 0.6s ease' }}>
         <Navbar />
 
-        <main style={{ width: '100%', maxWidth: '100%', overflowX: 'hidden' }}>
+        <main>
           <Hero />
           <SectionDivider label="ABOUT // 01" />
           <About />
-          <SectionDivider label="MOODBOARD // AUDIO" />
+          <SectionDivider label="CURRENT VIBE // AUDIO" />
           <MoodBoard />
           <SectionDivider label="EDUCATION // 02" />
           <Education />

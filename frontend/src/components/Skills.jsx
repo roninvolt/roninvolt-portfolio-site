@@ -27,16 +27,16 @@ const Skills = () => (
               className="skill-mod reveal"
               style={{
                 transitionDelay: `${i * 0.07}s`,
-                background: 'linear-gradient(180deg, rgba(16, 22, 44, 0.85) 0%, rgba(10, 14, 28, 0.95) 100%)',
-                borderColor: 'rgba(0, 240, 255, 0.14)',
+                background: 'linear-gradient(180deg, rgba(18, 18, 22, 0.85) 0%, rgba(10, 10, 12, 0.95) 100%)',
+                borderColor: 'rgba(255, 255, 255, 0.12)',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = accentColor;
-                e.currentTarget.style.boxShadow = `0 10px 35px rgba(0, 240, 255, 0.2), 0 0 15px rgba(139, 92, 246, 0.15)`;
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.45)';
+                e.currentTarget.style.boxShadow = `0 10px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 255, 255, 0.1)`;
                 e.currentTarget.style.transform = 'translateY(-4px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(0, 240, 255, 0.14)';
+                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
                 e.currentTarget.style.boxShadow = 'none';
                 e.currentTarget.style.transform = 'none';
               }}
@@ -49,22 +49,22 @@ const Skills = () => (
                   left: 0,
                   right: 0,
                   height: 2,
-                  background: `linear-gradient(90deg, ${accentColor}, transparent)`,
+                  background: 'linear-gradient(90deg, rgba(255, 255, 255, 0.6), transparent)',
                 }}
               />
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
-                <span style={{ fontSize: '0.6rem', fontWeight: 800, color: accentColor, letterSpacing: '1.2px', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: '0.6rem', fontWeight: 800, color: 'rgba(255, 255, 255, 0.9)', letterSpacing: '1.2px', textTransform: 'uppercase' }}>
                   {m.category}
                 </span>
                 <span>
-                  <i className={m.iconClass} style={{ color: accentColor, fontSize: '0.9rem' }} />
+                  <i className={m.iconClass} style={{ color: '#ffffff', fontSize: '0.9rem' }} />
                 </span>
               </div>
 
               <div className="skill-mod-hdr">
                 <h3 style={{ fontSize: '0.95rem', fontFamily: 'var(--font-hud)', color: '#ffffff' }}>
-                  <MatrixText text={m.label} glitchColor={accentColor} triggerOnHover={true} />
+                  <MatrixText text={m.label} glitchColor="#ffffff" triggerOnHover={true} />
                 </h3>
               </div>
               <p className="skill-mod-desc" style={{ color: 'rgba(255, 255, 255, 0.55)', fontFamily: 'var(--font-mono)', fontSize: '0.72rem' }}>
@@ -80,20 +80,20 @@ const Skills = () => (
                     role="img"
                     aria-label={s.n}
                     style={{
-                      borderColor: 'rgba(0, 240, 255, 0.14)',
+                      borderColor: 'rgba(255, 255, 255, 0.12)',
                       color: 'rgba(255, 255, 255, 0.65)',
                       borderRadius: '4px',
                       background: 'rgba(255, 255, 255, 0.02)',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.color = 'var(--cyan)';
-                      e.currentTarget.style.borderColor = 'var(--cyan)';
-                      e.currentTarget.style.boxShadow = `0 0 12px rgba(0, 240, 255, 0.3)`;
-                      e.currentTarget.style.backgroundColor = `rgba(0, 240, 255, 0.08)`;
+                      e.currentTarget.style.color = '#ffffff';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.6)';
+                      e.currentTarget.style.boxShadow = `0 0 12px rgba(255, 255, 255, 0.25)`;
+                      e.currentTarget.style.backgroundColor = `rgba(255, 255, 255, 0.08)`;
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.color = 'rgba(255, 255, 255, 0.65)';
-                      e.currentTarget.style.borderColor = 'rgba(0, 240, 255, 0.14)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
                       e.currentTarget.style.boxShadow = 'none';
                       e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.02)';
                     }}
