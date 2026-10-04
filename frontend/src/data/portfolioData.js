@@ -190,7 +190,7 @@ export const aboutData = {
     url: 'https://youtu.be/DzGllFMvwy8',
   },
   stats: [
-    { num: 'TEDx', lbl: 'SPEAKER @ TEDxKGCAS' },
+    { num: 'TEDx', lbl: 'SPEAKER · TEDxKGCAS' },
     { num: 'VOXEN', lbl: 'FOUNDER & DEV' },
     { num: '3RD', lbl: 'YEAR B.E. CSE (AIML)' },
     { num: 'AI/ML', lbl: 'CORE & GEN AI' },

@@ -1,17 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { personalData } from '../data/portfolioData';
 
-const BOOT_TEXT = '> INITIALIZING PORTS... ESTABLISHING SECURE SYSTEMS... PORTFOLIO COMPILED SUCCESSFULLY... SYSTEMS ONLINE...';
+const BOOT_TEXT = '> VOLTING CORE PROTOCOLS... LARPING DIGITAL ARCHETYPES... HACKING MAINFRAME... SYSTEMS ONLINE...';
+
+const LOADING_STEPS = ['VOLTING', 'LARPING', 'HACKING'];
 
 const IntroScreen = ({ onComplete }) => {
   const [phase, setPhase] = useState('v'); // 'v' | 'name' | 'done'
   const [opacity, setOpacity] = useState(1);
+  const [stepIndex, setStepIndex] = useState(0);
+  const [dots, setDots] = useState('');
 
+  // Trailing telemetry dots (. -> .. -> ...)
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase('name'), 1400);
-    const t2 = setTimeout(() => { setOpacity(0); }, 2800);
-    const t3 = setTimeout(() => { onComplete(); }, 3200);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    if (phase !== 'v') return;
+    const dotInterval = setInterval(() => {
+      setDots(prev => (prev.length >= 3 ? '' : prev + '.'));
+    }, 180);
+    return () => clearInterval(dotInterval);
+  }, [phase]);
+
+  // Sequentially change in order: VOLTING -> LARPING -> HACKING
+  useEffect(() => {
+    const s1 = setTimeout(() => setStepIndex(1), 650);
+    const s2 = setTimeout(() => setStepIndex(2), 1300);
+    const t1 = setTimeout(() => setPhase('name'), 1950);
+    const t2 = setTimeout(() => { setOpacity(0); }, 3350);
+    const t3 = setTimeout(() => { onComplete(); }, 3750);
+    return () => {
+      clearTimeout(s1);
+      clearTimeout(s2);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
   }, [onComplete]);
 
   return (
@@ -46,19 +68,59 @@ const IntroScreen = ({ onComplete }) => {
           <div style={{ position: 'relative', width: '90px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid rgba(255, 255, 255, 0.5)', borderRadius: '16px', background: '#000000', filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.4))', animation: 'hatGlitch 0.15s infinite alternate', overflow: 'hidden' }}>
             <img src="/voxen_logo.jpg" alt="Voxen Development" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
+
+          {/* Dynamic Changing Loading Text: VOLTING -> LARPING -> HACKING */}
           <div
+            key={stepIndex}
             style={{
-              fontFamily: 'var(--font-hud)',
-              fontSize: '1.2rem',
-              fontWeight: 900,
-              color: 'var(--cyan)',
-              letterSpacing: '8px',
-              textShadow: 'var(--glow-cyan)',
-              textTransform: 'uppercase',
-              marginTop: '0.5rem'
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              animation: 'stageGlitchIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards'
             }}
           >
-            INITIALIZING
+            <div
+              style={{
+                fontFamily: 'var(--font-hud)',
+                fontSize: 'clamp(1.15rem, 2.5vw, 1.4rem)',
+                fontWeight: 900,
+                color: 'var(--cyan)',
+                letterSpacing: '8px',
+                textShadow: 'var(--glow-cyan)',
+                textTransform: 'uppercase',
+                marginTop: '0.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              <span>{LOADING_STEPS[stepIndex]}</span>
+              <span style={{ display: 'inline-block', width: '28px', textAlign: 'left', color: 'rgba(255,255,255,0.7)', letterSpacing: '2px' }}>
+                {dots}
+              </span>
+            </div>
+
+            {/* Sequence step telemetry indicator */}
+            <div style={{ display: 'flex', gap: '6px', marginTop: '0.75rem', alignItems: 'center' }}>
+              {LOADING_STEPS.map((step, idx) => (
+                <div
+                  key={step}
+                  style={{
+                    width: idx === stepIndex ? '28px' : '8px',
+                    height: '3px',
+                    borderRadius: '2px',
+                    background: idx === stepIndex
+                      ? '#ffffff'
+                      : idx < stepIndex
+                        ? 'rgba(255, 255, 255, 0.45)'
+                        : 'rgba(255, 255, 255, 0.12)',
+                    boxShadow: idx === stepIndex ? '0 0 10px rgba(255, 255, 255, 0.8)' : 'none',
+                    transition: 'all 0.28s ease'
+                  }}
+                />
+              ))}
+            </div>
           </div>
         </div>
       ) : (
@@ -148,6 +210,11 @@ const IntroScreen = ({ onComplete }) => {
         @keyframes fadeUpIn {
           0%  { opacity: 0; transform: translateY(10px); }
           100%{ opacity: 1; transform: translateY(0); }
+        }
+        @keyframes stageGlitchIn {
+          0%   { opacity: 0; transform: translateY(8px) scale(0.96); filter: blur(4px); }
+          50%  { opacity: 0.85; filter: blur(0); }
+          100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
       `}</style>
     </div>

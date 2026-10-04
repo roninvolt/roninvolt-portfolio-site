@@ -2333,14 +2333,14 @@ body::after {
 /* Stats with gaming bar */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   margin-bottom: 1.2rem;
   width: 100%;
 }
 
 .stat-block {
-  padding: 1.6rem 1.2rem;
+  padding: 1.25rem 0.6rem;
   background: rgba(10, 10, 12, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
@@ -2349,6 +2349,11 @@ body::after {
   overflow: hidden;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 122px;
 }
 
 .stat-block:hover {
@@ -2376,10 +2381,15 @@ body::after {
 
 .stat-num {
   font-family: var(--font-hud);
-  font-size: clamp(2.2rem, 3.5vw, 2.8rem);
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
   font-weight: 900;
-  line-height: 1;
-  display: block;
+  line-height: 1.1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  white-space: nowrap !important;
+  letter-spacing: -0.02em;
   background: linear-gradient(
     115deg,
     #ffffff 0%,
@@ -2395,21 +2405,44 @@ body::after {
   animation: holoChromeFlow 7s ease-in-out infinite alternate;
   filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
   transition: transform 0.3s ease, filter 0.3s ease;
+  min-height: 2rem;
+}
+
+.stat-num .matrix-glitch-wrap,
+.stat-num .aesthetic-text-wrap {
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-num .matrix-char,
+.stat-num .aesthetic-char {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .stat-block:hover .stat-num {
-  transform: scale(1.08);
+  transform: scale(1.06);
   filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.75)) drop-shadow(0 0 35px rgba(255, 255, 255, 0.4));
 }
 
 .stat-lbl {
   font-family: var(--font-mono);
-  font-size: 0.64rem;
+  font-size: 0.62rem;
   color: rgba(255, 255, 255, 0.45);
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  margin-top: 0.5rem;
+  margin-top: 0.45rem;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 2.2em;
+  line-height: 1.25;
+  width: 100%;
+  padding: 0 2px;
 }
 
 .stat-block:hover .stat-lbl {
@@ -2417,10 +2450,12 @@ body::after {
 }
 
 .quick-facts {
-  background: rgba(1, 15, 31, 0.8);
+  background: rgba(10, 10, 12, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   padding: 1.5rem;
   margin-top: 1px;
+  width: 100%;
 }
 
 .fact-row {
@@ -4478,7 +4513,7 @@ body::after {
   }
 
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
 
@@ -6345,7 +6380,8 @@ canvas {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
   }
 }
 

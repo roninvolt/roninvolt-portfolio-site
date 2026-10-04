@@ -113,11 +113,11 @@ const About = () => (
             ))}
           </div>
 
-          <div className="quick-facts" style={{ background: 'rgba(10, 10, 12, 0.9)', borderColor: 'rgba(255, 255, 255, 0.08)' }}>
+          <div className="quick-facts" style={{ background: 'rgba(10, 10, 12, 0.9)', borderColor: 'rgba(255, 255, 255, 0.08)', borderRadius: '8px' }}>
             {aboutData.quickFacts.map(({ icon, key, val }) => (
               <div key={key} className="fact-row" style={{ borderBottomColor: 'rgba(255, 255, 255, 0.05)' }}>
                 <div className="fact-icon" style={{ color: 'var(--cyan)', borderColor: 'rgba(255, 255, 255, 0.15)', background: 'rgba(255, 255, 255, 0.03)' }}><i className={`fas ${icon}`} /></div>
-                <div>
+                <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="fact-key" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>{key}</div>
                   <div className="fact-val" style={{ color: '#fff' }}>
                     {val.includes('zyo.lol') ? (
