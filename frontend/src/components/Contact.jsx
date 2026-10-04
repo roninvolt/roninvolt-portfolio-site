@@ -30,15 +30,19 @@ const Contact = () => {
         body: JSON.stringify({
           name: form.name,
           email: form.email,
+          subject: form.subject,
+          phone: form.phone,
           message: formattedMessage,
         }),
       });
       const data = await res.json();
-      if (res.ok) {
+      if (res.ok && data.success) {
         setStatus({ loading: false, success: true, error: '' });
         setForm({ name: '', email: '', subject: '', phone: '', message: '' });
-        setTimeout(() => setStatus({ loading: false, success: false, error: '' }), 5000);
-      } else throw new Error(data.error || 'TRANSMISSION FAILED');
+        setTimeout(() => setStatus({ loading: false, success: false, error: '' }), 6000);
+      } else {
+        throw new Error(data.message || data.error || 'TRANSMISSION FAILED');
+      }
     } catch (err) {
       setStatus({ loading: false, success: false, error: err.message });
     }
